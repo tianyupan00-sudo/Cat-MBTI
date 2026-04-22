@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="description" content="CatTI — 15 道题，16 种猫猫人格，测测你的猫猫灵魂。MBTI 式可爱性格测试，中英双语。"/>
+<meta name="keywords" content="CatTI,MBTI,猫咪性格,性格测试,猫猫,16种人格,双语测试"/>
+<meta name="theme-color" content="#FFF5EC"/>
+<meta name="author" content="CatTI"/>
+<!-- Social sharing -->
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="CatTI — 你是哪种猫猫？"/>
+<meta property="og:description" content="15 道题 · 16 种猫猫人格 · 测测你的猫猫灵魂"/>
+<meta property="og:image" content="og.jpg"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:locale" content="zh_CN"/>
+<meta property="og:locale:alternate" content="en_US"/>
+<meta property="og:site_name" content="CatTI"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="CatTI — 你是哪种猫猫？"/>
+<meta name="twitter:description" content="15 道题 · 16 种猫猫人格 · 测测你的猫猫灵魂"/>
+<meta name="twitter:image" content="og.jpg"/>
+<meta itemprop="name" content="CatTI — 你是哪种猫猫？"/>
+<meta itemprop="description" content="15 道题 · 16 种猫猫人格 · 测测你的猫猫灵魂"/>
+<meta itemprop="image" content="og.jpg"/>
+<title>CatTI — 你是哪种猫猫？</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#FFF5EC;--bg2:#FBEADB;--card:#FFFEFB;--border:#F0E4D2;
+  --ink:#2D2118;--body:#4A3C30;--muted:#9A8878;--hint:#BAA894;
+  --rose:#E87C6A;--peach:#F4A884;--lavender:#C4A8D8;--sage:#9ECFAE;--sky:#8CC4D8;--gold:#E8C064;
+  --pill:#F4E6D4;--pill-t:#8A6E52;
+  --shadow:0 2px 24px rgba(120,70,30,.08);
+  --shadow-lg:0 8px 32px rgba(120,70,30,.1);
+  --r:18px;--r-sm:12px;--r-lg:26px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  background-image:
+    radial-gradient(ellipse at top left, rgba(244,168,132,.12), transparent 50%),
+    radial-gradient(ellipse at bottom right, rgba(196,168,216,.1), transparent 50%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.58 0 0 0 0 0.45 0 0 0 0 0.3 0 0 0 0.14 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+  font-family:'Noto Sans SC',-apple-system,sans-serif;color:var(--body);
+  -webkit-font-smoothing:antialiased;line-height:1.7;min-height:100vh;
+}
+#app{max-width:600px;margin:0 auto;padding:1.5rem 1.25rem 5rem;}
+.screen{display:none;animation:fadeUp .45s ease;}.screen.active{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── BUTTONS ───────────────────────────────── */
+.btn-primary{background:var(--rose);color:#fff;border:none;padding:1rem 2.5rem;font-size:.95rem;font-weight:700;border-radius:100px;cursor:pointer;box-shadow:0 4px 20px rgba(232,124,106,.35);transition:all .18s;letter-spacing:.02em;font-family:inherit;}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 26px rgba(232,124,106,.42);}
+.btn-primary:active{transform:translateY(0);}
+.btn-outline{background:transparent;color:var(--body);border:1.5px solid var(--border);padding:.9rem 2rem;font-size:.9rem;font-weight:500;border-radius:100px;cursor:pointer;transition:all .15s;font-family:inherit;}
+.btn-outline:hover{background:var(--pill);border-color:var(--hint);}
+.btn-ghost{background:transparent;border:1.5px solid var(--border);color:var(--body);padding:.7rem 1.5rem;font-size:.85rem;font-weight:500;border-radius:100px;cursor:pointer;transition:all .15s;font-family:inherit;display:inline-flex;align-items:center;gap:.4rem;}
+.btn-ghost:hover{background:var(--pill);border-color:var(--peach);color:var(--ink);}
+
+/* ── LANDING ───────────────────────────────── */
+.land{text-align:center;padding:1.5rem 0 1rem;}
+.land-cat{display:flex;justify-content:center;margin-bottom:1.25rem;}
+.land h1{font-family:'Noto Serif SC',serif;font-size:3rem;font-weight:700;color:var(--ink);letter-spacing:-.04em;line-height:1.1;}
+.land .sub{font-size:1rem;color:var(--muted);margin:.5rem 0 .15rem;font-weight:500;}
+.land .tag{font-size:.8rem;color:var(--hint);margin-bottom:2rem;letter-spacing:.02em;}
+.land-cta{display:flex;flex-direction:column;gap:.7rem;align-items:center;}
+.land-cta .btn-outline{font-size:.82rem;padding:.65rem 1.3rem;}
+
+/* ── QUIZ ──────────────────────────────────── */
+.prog{height:5px;background:var(--border);border-radius:5px;margin-bottom:2rem;overflow:hidden;}
+.prog-bar{height:100%;border-radius:5px;background:linear-gradient(90deg,var(--peach),var(--rose));transition:width .5s cubic-bezier(.4,0,.2,1);}
+.q-meta{font-size:.75rem;color:var(--hint);letter-spacing:.08em;margin-bottom:1.25rem;text-align:center;}
+.q-face{display:flex;justify-content:center;margin-bottom:1.25rem;}
+.q-face-ring{width:96px;height:96px;border-radius:50%;overflow:hidden;background:linear-gradient(135deg,var(--bg2),var(--card));border:2px solid var(--border);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);}
+.q-text{font-size:1.1rem;font-weight:700;color:var(--ink);line-height:1.65;margin-bottom:1.5rem;text-align:center;padding:0 .5rem;font-family:'Noto Serif SC',serif;}
+.opts{display:flex;flex-direction:column;gap:10px;}
+.opt{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r);padding:1rem 1.25rem;text-align:left;font-size:.9rem;color:var(--body);cursor:pointer;transition:all .18s;line-height:1.65;box-shadow:var(--shadow);font-family:inherit;}
+.opt:hover{border-color:var(--peach);background:#FFF5EB;transform:translateY(-1px);}
+.opt.sel{background:var(--ink);color:#FFF8F0;border-color:var(--ink);box-shadow:0 4px 16px rgba(45,33,24,.2);}
+.opt:active{transform:scale(.99);}
+.nav-row{display:flex;justify-content:space-between;align-items:center;margin-top:1.75rem;gap:.75rem;}
+.prv{visibility:hidden;}
+.nxt{opacity:0;pointer-events:none;transition:opacity .25s,transform .15s;}
+.nxt.on{opacity:1;pointer-events:all;}
+
+/* ── RESULT ────────────────────────────────── */
+.res-card{background:var(--card);border-radius:var(--r-lg);padding:2.25rem 1.75rem 2rem;text-align:center;box-shadow:var(--shadow-lg);margin-bottom:1rem;border:1px solid var(--border);position:relative;overflow:hidden;}
+.res-card::before{content:'';position:absolute;top:0;left:0;right:0;height:140px;background:linear-gradient(135deg,#FFE8DA,#F5D9E3,#DCE8F2);opacity:.55;}
+.res-cat{position:relative;z-index:1;display:flex;justify-content:center;margin-bottom:.5rem;}
+.res-breed{position:relative;z-index:1;font-family:'Noto Serif SC',serif;font-size:2.2rem;font-weight:700;color:var(--ink);letter-spacing:-.03em;margin-bottom:.35rem;}
+.res-motto{position:relative;z-index:1;font-size:.92rem;color:var(--muted);font-style:italic;margin-bottom:.85rem;}
+.mbti-tag{position:relative;z-index:1;display:inline-block;background:var(--pill);color:var(--pill-t);font-size:.7rem;letter-spacing:.12em;padding:5px 16px;border-radius:100px;font-weight:500;}
+
+.sec{padding:1.25rem 0;border-top:1px solid var(--border);}
+.sec-title{font-size:.7rem;color:var(--hint);letter-spacing:.12em;margin-bottom:.85rem;font-weight:500;text-transform:uppercase;}
+.sec-body{font-size:.92rem;color:var(--body);line-height:1.85;}
+
+/* categorized tags */
+.tag-groups{display:flex;flex-direction:column;gap:.9rem;margin-top:.85rem;}
+.tag-group{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;}
+.tag-group-label{font-size:.72rem;color:var(--muted);font-weight:500;min-width:4.5rem;flex-shrink:0;letter-spacing:.04em;}
+.tag-group-items{display:flex;flex-wrap:wrap;gap:6px;}
+.tag-item{font-size:.76rem;color:var(--pill-t);background:var(--pill);padding:5px 13px;border-radius:100px;font-weight:500;}
+
+.dim-bars{display:flex;flex-direction:column;gap:14px;}
+.dim-row{display:flex;align-items:center;gap:10px;font-size:.8rem;}
+.dim-l{width:22px;text-align:right;font-weight:700;color:var(--ink);}
+.dim-r{width:22px;color:var(--hint);}
+.dim-bg{flex:1;height:10px;background:var(--pill);border-radius:5px;overflow:hidden;}
+.dim-fg{height:100%;border-radius:5px;transition:width .7s ease;}
+.dim-p{width:36px;text-align:right;font-size:.72rem;color:var(--hint);font-weight:500;}
+
+.alt-card{background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--r);padding:1rem 1.25rem;display:flex;align-items:center;gap:1rem;margin-top:.75rem;cursor:pointer;transition:all .15s;}
+.alt-card:hover{background:#F8E0C8;border-color:var(--peach);}
+.alt-face{flex-shrink:0;width:60px;height:60px;border-radius:50%;overflow:hidden;background:var(--card);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;}
+.alt-info{flex:1;min-width:0;}
+.alt-info .alt-label{font-size:.7rem;color:var(--hint);margin-bottom:2px;}
+.alt-info .alt-name{font-size:.98rem;font-weight:700;color:var(--ink);font-family:'Noto Serif SC',serif;}
+.alt-info .alt-motto{font-size:.78rem;color:var(--muted);font-style:italic;margin-top:2px;}
+.alt-arrow{color:var(--hint);font-size:1.1rem;flex-shrink:0;}
+
+.compat{display:flex;gap:10px;margin-top:.75rem;}
+.compat-card{flex:1;background:var(--bg2);border-radius:var(--r-sm);padding:.85rem 1rem;border:1.5px solid var(--border);cursor:pointer;transition:all .15s;}
+.compat-card:hover{border-color:var(--peach);background:#F8E0C8;}
+.compat-label{font-size:.68rem;color:var(--hint);margin-bottom:3px;font-weight:500;letter-spacing:.05em;}
+.compat-name{font-size:.9rem;font-weight:700;color:var(--ink);font-family:'Noto Serif SC',serif;}
+.compat-type{font-size:.72rem;color:var(--muted);margin-top:1px;}
+
+.actions{display:flex;gap:10px;margin-top:1.75rem;}
+.actions>*{flex:1;}
+
+/* ── GALLERY ───────────────────────────────── */
+.gal-header{text-align:center;margin-bottom:1.75rem;padding-top:.5rem;}
+.gal-header h1{font-family:'Noto Serif SC',serif;font-size:2rem;font-weight:700;color:var(--ink);letter-spacing:-.02em;margin-bottom:.35rem;}
+.gal-header p{font-size:.85rem;color:var(--muted);}
+.gal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+@media(max-width:540px){.gal-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:380px){.gal-grid{grid-template-columns:repeat(2,1fr);}}
+.gal-card{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r);padding:.75rem .5rem .85rem;cursor:pointer;transition:all .2s;text-align:center;box-shadow:var(--shadow);}
+.gal-card:hover{transform:translateY(-3px);border-color:var(--peach);box-shadow:var(--shadow-lg);}
+.gal-face{display:flex;justify-content:center;margin-bottom:.45rem;}
+.gal-name{font-family:'Noto Serif SC',serif;font-size:.86rem;font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:2px;}
+.gal-mbti{font-size:.65rem;color:var(--hint);letter-spacing:.08em;font-weight:500;}
+.gal-back{display:flex;align-items:center;gap:.3rem;margin-bottom:1rem;}
+
+/* ── MISC ──────────────────────────────────── */
+.breeds{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:2rem;padding-top:1.75rem;border-top:1px solid var(--border);}
+.breeds span{font-size:.75rem;color:var(--pill-t);background:var(--pill);padding:5px 14px;border-radius:100px;cursor:pointer;transition:all .15s;}
+.breeds span:hover{background:var(--peach);color:#fff;}
+
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#FFF8F0;padding:.8rem 1.75rem;border-radius:100px;font-size:.82rem;opacity:0;transition:all .3s;pointer-events:none;z-index:999;white-space:nowrap;font-weight:500;box-shadow:0 8px 24px rgba(45,33,24,.25);}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+.footer{text-align:center;margin-top:3rem;font-size:.72rem;color:var(--hint);padding-top:1.5rem;border-top:1px solid var(--border);}
+
+/* ── LANGUAGE TOGGLE ───────────────────────── */
+#app{position:relative;}
+.lang-toggle{position:absolute;top:1.5rem;right:1.25rem;display:flex;background:var(--pill);border-radius:100px;padding:3px;gap:1px;font-family:inherit;z-index:10;box-shadow:0 1px 4px rgba(120,70,30,.08);}
+.lang-toggle button{background:transparent;border:none;padding:4px 11px;border-radius:100px;cursor:pointer;color:var(--pill-t);font-size:.72rem;font-weight:600;font-family:inherit;transition:all .15s;letter-spacing:.02em;}
+.lang-toggle button.active{background:var(--ink);color:#FFF8F0;}
+.lang-toggle button:hover:not(.active){color:var(--ink);}
+
+/* Two-paragraph spacing for personality description */
+.sec-body p+p{margin-top:.75em;}
+
+/* ── QUIZ PAW TRAIL — 4 VARIANTS ───────────── */
+.q-paws{
+  display:flex;justify-content:center;align-items:center;
+  gap:1.3rem;margin:.5rem 0 1.75rem;min-height:64px;position:relative;
+}
+.q-paw,.q-spark{
+  font-size:1.7rem;display:inline-block;line-height:1;
+}
+.q-spark{font-size:1.2rem;}
+
+/* V1 — Walking Trail: sequential fade, alternating up/down */
+.q-paws-v1 .q-paw{opacity:0;animation:pawWalk 4.8s ease-in-out infinite;}
+.q-paws-v1 .q-paw:nth-child(odd){transform:translateY(-10px);}
+.q-paws-v1 .q-paw:nth-child(even){transform:translateY(10px);}
+.q-paws-v1 .q-paw:nth-child(1){animation-delay:0s;}
+.q-paws-v1 .q-paw:nth-child(2){animation-delay:.38s;}
+.q-paws-v1 .q-paw:nth-child(3){animation-delay:.76s;}
+.q-paws-v1 .q-paw:nth-child(4){animation-delay:1.14s;}
+.q-paws-v1 .q-paw:nth-child(5){animation-delay:1.52s;}
+@keyframes pawWalk{
+  0%{opacity:0;}9%{opacity:.48;}28%{opacity:.48;}44%{opacity:0;}100%{opacity:0;}
+}
+
+/* V2 — Sparkle Mix: paws + sparkles, all gently bobbing */
+.q-paws-v2>*{opacity:.4;animation:sparkBob 3.2s ease-in-out infinite;}
+.q-paws-v2 .q-spark{opacity:.55;}
+.q-paws-v2>:nth-child(1){animation-delay:0s;}
+.q-paws-v2>:nth-child(2){animation-delay:.3s;}
+.q-paws-v2>:nth-child(3){animation-delay:.6s;}
+.q-paws-v2>:nth-child(4){animation-delay:.9s;}
+.q-paws-v2>:nth-child(5){animation-delay:1.2s;}
+@keyframes sparkBob{
+  0%,100%{transform:translateY(0) rotate(0);}
+  50%{transform:translateY(-10px) rotate(6deg);}
+}
+
+/* V3 — Zigzag Bounce: bigger jumps, faster walk */
+.q-paws-v3 .q-paw{opacity:0;animation:pawWalk 3.2s ease-in-out infinite;}
+.q-paws-v3 .q-paw:nth-child(odd){transform:translateY(-18px);}
+.q-paws-v3 .q-paw:nth-child(even){transform:translateY(14px);}
+.q-paws-v3 .q-paw:nth-child(1){animation-delay:0s;}
+.q-paws-v3 .q-paw:nth-child(2){animation-delay:.22s;}
+.q-paws-v3 .q-paw:nth-child(3){animation-delay:.44s;}
+.q-paws-v3 .q-paw:nth-child(4){animation-delay:.66s;}
+.q-paws-v3 .q-paw:nth-child(5){animation-delay:.88s;}
+
+/* V4 — Scattered Paws: absolute positioning, random staggered fade */
+.q-paws-v4{display:block;height:72px;gap:0;}
+.q-paws-v4 .q-paw{
+  position:absolute;opacity:0;animation:scatterFade 5s ease-in-out infinite;
+}
+.q-paws-v4 .q-paw:nth-child(1){left:14%;top:8%;animation-delay:0s;}
+.q-paws-v4 .q-paw:nth-child(2){left:34%;top:58%;animation-delay:.9s;}
+.q-paws-v4 .q-paw:nth-child(3){left:50%;top:14%;animation-delay:1.8s;}
+.q-paws-v4 .q-paw:nth-child(4){left:68%;top:52%;animation-delay:2.7s;}
+.q-paws-v4 .q-paw:nth-child(5){left:84%;top:18%;animation-delay:3.6s;}
+@keyframes scatterFade{
+  0%{opacity:0;}8%{opacity:.55;}22%{opacity:.55;}35%{opacity:0;}100%{opacity:0;}
+}
+
+.q-face-ring{display:none;}  /* legacy hide */
+
+/* ── SHARE-AS-IMAGE BUTTON ─────────────────── */
+.save-img-row{display:flex;justify-content:center;margin:.5rem 0 .25rem;}
+
+
+.credit{
+  text-align:center;margin:.4rem 0 2rem;
+  font-size:.82rem;color:#BAA894;letter-spacing:.02em;
+  font-family:inherit;
+}
+.credit-heart{color:#E87C6A;margin:0 .15em;}
+.credit-link{
+  color:#9A8878;text-decoration:none;
+  border-bottom:1px dotted #D4C4B0;
+  transition:color .2s,border-color .2s;
+}
+.credit-link:hover{color:#E87C6A;border-bottom-color:#E87C6A;}
+</style>
+</head>
+<body>
+<div id="app">
+<div class="lang-toggle">
+  <button class="active" data-lang="zh" onclick="setLang('zh')">中</button>
+  <button data-lang="en" onclick="setLang('en')">EN</button>
+</div>
+
+<!-- ── LANDING ─────────────────────────────── -->
+<div id="landing" class="screen active">
+  <div class="land">
+    <div class="land-cat" id="landCat"></div>
+    <h1>CatTI</h1>
+    <p class="sub" data-i18n="subtitle">你是哪种猫猫？</p>
+    <p class="tag" data-i18n="tagline">15道题 · 16种猫猫人格 · 测测你的猫猫灵魂</p>
+    <div class="land-cta">
+      <button class="btn-primary" data-i18n="startBtn" onclick="startQuiz()">开始测试</button>
+      <button class="btn-outline" data-i18n="galleryLinkLand" onclick="openGallery()">先看看猫猫图鉴 →</button>
+    </div>
+  </div>
+  <div class="breeds" id="breedGrid"></div>
+  <div class="footer" data-i18n="footer">CatTI — 猫猫性格测试 · 纯属娱乐 · 喵~</div>
+  <div class="credit">
+    made with <span class="credit-heart">♡</span> by
+    <a href="https://www.xiaohongshu.com/user/profile/XHS_PROFILE_ID"
+       target="_blank" rel="noopener noreferrer"
+       class="credit-link">@XHS_HANDLE</a>
+  </div>
+</div>
+
+<!-- ── QUIZ ────────────────────────────────── -->
+<div id="quiz" class="screen">
+  <div class="gal-back"><button class="btn-ghost" onclick="backToLanding()" data-i18n="homeBtn">← 首页</button></div>
+  <div class="prog"><div class="prog-bar" id="prog"></div></div>
+  <p class="q-meta" id="qmeta">第 1 题 / 15</p>
+  <div class="q-paws" id="qPaws" aria-hidden="true"></div>
+  <p class="q-text" id="qtext"></p>
+  <div class="opts" id="opts"></div>
+  <div class="nav-row">
+    <button class="btn-ghost prv" id="prv" data-i18n="prevBtn" onclick="prevQ()">← 上一题</button>
+    <button class="btn-primary nxt" id="nxt" data-i18n="nextBtn" onclick="nextQ()">继续 →</button>
+  </div>
+</div>
+
+<!-- ── RESULT ──────────────────────────────── -->
+<div id="result" class="screen">
+  <div class="res-card">
+    <div class="res-cat" id="resCat"></div>
+    <h2 class="res-breed" id="rBreed"></h2>
+    <p class="res-motto" id="rMotto"></p>
+    <span class="mbti-tag" id="rMbti"></span>
+  </div>
+  <div class="sec"><p class="sec-title" data-i18n="secDesc">性格解析</p><div class="sec-body" id="rDesc"></div></div>
+  <div class="sec"><p class="sec-title" data-i18n="secTags">你的标签</p><div class="tag-groups" id="rTags"></div></div>
+  <div class="sec"><p class="sec-title" data-i18n="secAltResult">你也可能是…</p><div id="rAlt"></div></div>
+  <div class="sec"><p class="sec-title" data-i18n="secDims">四个维度</p><div class="dim-bars" id="rDims"></div></div>
+  <div class="sec"><p class="sec-title" data-i18n="secCompat">猫际关系</p><div class="compat" id="rCompat"></div></div>
+  <div class="actions">
+    <button class="btn-primary" data-i18n="saveImgBtn" onclick="shareAsImage()">保存图片</button>
+    <button class="btn-outline" data-i18n="resetBtn" onclick="reset()">再测一次</button>
+  </div>
+  <div style="text-align:center;margin-top:1rem;"><button class="btn-ghost" data-i18n="galleryLinkResult" onclick="openGallery()">看看其他猫猫 →</button></div>
+  <div class="footer" data-i18n="footer">CatTI — 猫猫性格测试 · 纯属娱乐 · 喵~</div>
+  <div class="credit">
+    made with <span class="credit-heart">♡</span> by
+    <a href="https://www.xiaohongshu.com/user/profile/XHS_PROFILE_ID"
+       target="_blank" rel="noopener noreferrer"
+       class="credit-link">@XHS_HANDLE</a>
+  </div>
+</div>
+
+<!-- ── GALLERY ─────────────────────────────── -->
+<div id="gallery" class="screen">
+  <div class="gal-back"><button class="btn-ghost" data-i18n="backBtn" onclick="backFromGallery()">← 返回</button></div>
+  <div class="gal-header">
+    <h1 data-i18n="galleryTitle">猫猫图鉴</h1>
+    <p data-i18n="gallerySub">16种猫猫人格 · 点击查看详情</p>
+  </div>
+  <div class="gal-grid" id="galGrid"></div>
+  <div class="footer" data-i18n="footer">CatTI — 猫猫性格测试 · 纯属娱乐 · 喵~</div>
+  <div class="credit">
+    made with <span class="credit-heart">♡</span> by
+    <a href="https://www.xiaohongshu.com/user/profile/XHS_PROFILE_ID"
+       target="_blank" rel="noopener noreferrer"
+       class="credit-link">@XHS_HANDLE</a>
+  </div>
+</div>
+
+<!-- ── GALLERY DETAIL ──────────────────────── -->
+<div id="galleryDetail" class="screen">
+  <div class="gal-back"><button class="btn-ghost" data-i18n="backBtn" onclick="backToGallery()">← 返回</button></div>
+  <div class="res-card">
+    <div class="res-cat" id="gdCat"></div>
+    <h2 class="res-breed" id="gdBreed"></h2>
+    <p class="res-motto" id="gdMotto"></p>
+    <span class="mbti-tag" id="gdMbti"></span>
+  </div>
+  <div class="sec"><p class="sec-title" data-i18n="secDesc">性格解析</p><div class="sec-body" id="gdDesc"></div></div>
+  <div class="sec"><p class="sec-title" data-i18n="secTagsGallery">标签</p><div class="tag-groups" id="gdTags"></div></div>
+  <div class="sec"><p class="sec-title" data-i18n="secAltGallery">也可能是…</p><div id="gdAlt"></div></div>
+  <div class="sec"><p class="sec-title" data-i18n="secCompat">猫际关系</p><div class="compat" id="gdCompat"></div></div>
+  <div style="text-align:center;margin-top:1.75rem;"><button class="btn-primary" data-i18n="takeTestBtn" onclick="startQuizFromGallery()">测测我是哪种</button></div>
+  <div class="footer" data-i18n="footer">CatTI — 猫猫性格测试 · 纯属娱乐 · 喵~</div>
+  <div class="credit">
+    made with <span class="credit-heart">♡</span> by
+    <a href="https://www.xiaohongshu.com/user/profile/XHS_PROFILE_ID"
+       target="_blank" rel="noopener noreferrer"
+       class="credit-link">@XHS_HANDLE</a>
+  </div>
+</div>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ═══════════════════════════════════════════
+   EMBEDDED CAT IMAGES (base64 PNG)
+   ═══════════════════════════════════════════ */
+
+const CAT_IMAGES = {
+  INFJ: 'images/INFJ.jpg',
+  INTJ: 'images/INTJ.jpg',
+  INTP: 'images/INTP.jpg',
+  ENTJ: 'images/ENTJ.jpg',
+  ENTP: 'images/ENTP.jpg',
+  INFP: 'images/INFP.jpg',
+  ENFJ: 'images/ENFJ.jpg',
+  ENFP: 'images/ENFP.jpg',
+  ISTJ: 'images/ISTJ.jpg',
+  ISFJ: 'images/ISFJ.jpg',
+  ESTJ: 'images/ESTJ.jpg',
+  ESFJ: 'images/ESFJ.jpg',
+  ISTP: 'images/ISTP.jpg',
+  ISFP: 'images/ISFP.jpg',
+  ESTP: 'images/ESTP.jpg',
+  ESFP: 'images/ESFP.jpg'
+};
+
+/* ═══════════════════════════════════════════
+   WATERCOLOR SVG CAT FACTORY
+   ═══════════════════════════════════════════ */
+
+let _svgCounter = 0;
+
+function catSvg(cfg, sz, variant){
+  // variant: 'face' (72x72, default thumbnail) | 'full' (130x130, large)
+  const id = ++_svgCounter;
+  const seed = id;
+  const big = variant === 'full';
+  const size = sz || (big ? 150 : 88);
+  const vb = big ? 130 : 72;
+  const {fur, fur2, ear, eye, pupil, nose, cheek, marking, markType} = cfg;
+
+  // watercolor filter settings
+  const wcScale = big ? 3.4 : 2.4;
+  const wcFreq = big ? 0.014 : 0.018;
+  const haloBlur = big ? 2.8 : 1.8;
+
+  // markings per variant
+  const mk = buildMarkings(markType, marking, big);
+
+  // anatomy coords (differ by variant)
+  const A = big ? {
+    // body
+    bodyCX:65, bodyCY:56, bodyRX:38, bodyRY:34,
+    earL:'M65 24L48 2L43 22Z', earR:'M65 24L82 2L87 22Z',
+    earLIn:'M65 24L51 6L48 21Z', earRIn:'M65 24L79 6L82 21Z',
+    bodyPath:'M65 24C42 24 28 40 28 58C28 78 44 90 65 90C86 90 102 78 102 58C102 40 88 24 65 24Z',
+    // eyes
+    eyeLX:51, eyeRX:79, eyeCY:58, eyeW:8, eyeH:10,
+    irisW:6.8, irisH:8.8, pupilW:3.8, pupilH:6,
+    hlBigX:53.4, hlBigRX:2.2, hlBigRY:2.6,
+    hlBigX2:81.4, hlSmlOffX:-3.5, hlSmlOffY:2.5,
+    // cheek
+    cheekLX:43, cheekRX:87, cheekCY:74, cheekRX2:10, cheekRY2:6.5,
+    // nose & mouth
+    noseCX:65, noseCY:75.5, noseRX:3.3, noseRY:2.3,
+    // belly
+    bellyCX:65, bellyCY:72, bellyRX:22, bellyRY:15,
+    // body offset for tail/paws (full only)
+    showBottom:true
+  } : {
+    bodyCX:36, bodyCY:38, bodyRX:30, bodyRY:27,
+    earL:'M36 8L22 -6L18 7Z', earR:'M36 8L50 -6L54 7Z',
+    earLIn:'M36 8L24 -3L22 6Z', earRIn:'M36 8L48 -3L50 6Z',
+    bodyPath:'M36 8C18 8 6 22 6 38C6 54 18 64 36 64C54 64 66 54 66 38C66 22 54 8 36 8Z',
+    eyeLX:25.5, eyeRX:46.5, eyeCY:33, eyeW:6.2, eyeH:7.6,
+    irisW:5.2, irisH:6.6, pupilW:2.8, pupilH:4.6,
+    hlBigX:27.4, hlBigRX:1.7, hlBigRY:2,
+    hlBigX2:48.4, hlSmlOffX:-2.6, hlSmlOffY:1.9,
+    cheekLX:20, cheekRX:52, cheekCY:43, cheekRX2:6, cheekRY2:4.3,
+    noseCX:36, noseCY:45.5, noseRX:2.6, noseRY:1.9,
+    bellyCX:36, bellyCY:46, bellyRX:17, bellyRY:12,
+    showBottom:false
+  };
+
+  // Paws/tail for full variant only (drawn before body)
+  const bottomBits = big ? `
+    <ellipse cx="65" cy="108" rx="36" ry="16" fill="${fur}" opacity=".55" filter="url(#wc-edge-${id})"/>
+    <path d="M101 100Q122 86 118 106Q114 120 104 114" stroke="${fur}" stroke-width="9" fill="none" stroke-linecap="round" opacity=".75" filter="url(#wc-${id})"/>
+    <g filter="url(#wc-${id})">
+      <ellipse cx="46" cy="116" rx="13" ry="7.5" fill="${fur}"/>
+      <ellipse cx="84" cy="116" rx="13" ry="7.5" fill="${fur}"/>
+    </g>
+    <g opacity=".55">
+      <ellipse cx="40" cy="119" rx="2.2" ry="1.6" fill="${nose}"/>
+      <ellipse cx="46" cy="121" rx="2.2" ry="1.6" fill="${nose}"/>
+      <ellipse cx="52" cy="119" rx="2.2" ry="1.6" fill="${nose}"/>
+      <ellipse cx="78" cy="119" rx="2.2" ry="1.6" fill="${nose}"/>
+      <ellipse cx="84" cy="121" rx="2.2" ry="1.6" fill="${nose}"/>
+      <ellipse cx="90" cy="119" rx="2.2" ry="1.6" fill="${nose}"/>
+    </g>
+  ` : '';
+
+  return `<svg width="${size}" height="${size}" viewBox="0 0 ${vb} ${vb}" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="wc-${id}" x="-15%" y="-15%" width="130%" height="130%">
+        <feTurbulence type="fractalNoise" baseFrequency="${wcFreq}" numOctaves="2" seed="${seed}" result="n"/>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="${wcScale}"/>
+      </filter>
+      <filter id="wc-edge-${id}" x="-25%" y="-25%" width="150%" height="150%">
+        <feGaussianBlur stdDeviation="${haloBlur}"/>
+      </filter>
+      <filter id="wc-soft-${id}" x="-15%" y="-15%" width="130%" height="130%">
+        <feTurbulence type="fractalNoise" baseFrequency="${wcFreq*1.2}" numOctaves="2" seed="${seed+3}" result="n2"/>
+        <feDisplacementMap in="SourceGraphic" in2="n2" scale="${wcScale*0.7}"/>
+        <feGaussianBlur stdDeviation=".4"/>
+      </filter>
+      <radialGradient id="wash-${id}" cx="50%" cy="38%" r="68%">
+        <stop offset="0%" stop-color="${fur2}" stop-opacity="1"/>
+        <stop offset="60%" stop-color="${fur}" stop-opacity="1"/>
+        <stop offset="100%" stop-color="${fur}" stop-opacity=".92"/>
+      </radialGradient>
+      <radialGradient id="cheek-${id}" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="${cheek||'#F4C0B8'}" stop-opacity=".75"/>
+        <stop offset="100%" stop-color="${cheek||'#F4C0B8'}" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+
+    ${bottomBits}
+
+    <!-- soft outer halo -->
+    <path d="${A.bodyPath}" fill="${fur}" opacity=".22" filter="url(#wc-edge-${id})"/>
+
+    <!-- body + ears with watercolor -->
+    <g filter="url(#wc-${id})">
+      <path d="${A.bodyPath}" fill="url(#wash-${id})"/>
+      <path d="${A.earL}" fill="${fur}"/>
+      <path d="${A.earR}" fill="${fur}"/>
+      <path d="${A.earLIn}" fill="${ear}"/>
+      <path d="${A.earRIn}" fill="${ear}"/>
+    </g>
+
+    <!-- markings (softer filter) -->
+    <g filter="url(#wc-soft-${id})">${mk}</g>
+
+    <!-- belly wash -->
+    <ellipse cx="${A.bellyCX}" cy="${A.bellyCY}" rx="${A.bellyRX}" ry="${A.bellyRY}" fill="${fur2}" opacity=".55" filter="url(#wc-soft-${id})"/>
+
+    <!-- cheek blush (soft radial, no filter for cleanliness) -->
+    ${cheek ? `
+      <ellipse cx="${A.cheekLX}" cy="${A.cheekCY}" rx="${A.cheekRX2}" ry="${A.cheekRY2}" fill="url(#cheek-${id})"/>
+      <ellipse cx="${A.cheekRX}" cy="${A.cheekCY}" rx="${A.cheekRX2}" ry="${A.cheekRY2}" fill="url(#cheek-${id})"/>
+    ` : ''}
+
+    <!-- eyes: crisp, big, storybook -->
+    <ellipse cx="${A.eyeLX}" cy="${A.eyeCY}" rx="${A.eyeW}" ry="${A.eyeH}" fill="#FFFDF8"/>
+    <ellipse cx="${A.eyeRX}" cy="${A.eyeCY}" rx="${A.eyeW}" ry="${A.eyeH}" fill="#FFFDF8"/>
+    <ellipse cx="${A.eyeLX}" cy="${A.eyeCY+.3}" rx="${A.irisW}" ry="${A.irisH}" fill="${eye}"/>
+    <ellipse cx="${A.eyeRX}" cy="${A.eyeCY+.3}" rx="${A.irisW}" ry="${A.irisH}" fill="${eye}"/>
+    <ellipse cx="${A.eyeLX}" cy="${A.eyeCY+.6}" rx="${A.pupilW}" ry="${A.pupilH}" fill="${pupil}"/>
+    <ellipse cx="${A.eyeRX}" cy="${A.eyeCY+.6}" rx="${A.pupilW}" ry="${A.pupilH}" fill="${pupil}"/>
+    <!-- big highlight -->
+    <ellipse cx="${A.hlBigX}" cy="${A.eyeCY-2}" rx="${A.hlBigRX}" ry="${A.hlBigRY}" fill="#fff"/>
+    <ellipse cx="${A.hlBigX2}" cy="${A.eyeCY-2}" rx="${A.hlBigRX}" ry="${A.hlBigRY}" fill="#fff"/>
+    <!-- small highlight -->
+    <circle cx="${A.eyeLX+A.hlSmlOffX}" cy="${A.eyeCY+A.hlSmlOffY}" r=".8" fill="#fff" opacity=".85"/>
+    <circle cx="${A.eyeRX+A.hlSmlOffX}" cy="${A.eyeCY+A.hlSmlOffY}" r=".8" fill="#fff" opacity=".85"/>
+
+    <!-- nose -->
+    <path d="M${A.noseCX-A.noseRX} ${A.noseCY} Q${A.noseCX} ${A.noseCY+A.noseRY*1.4} ${A.noseCX+A.noseRX} ${A.noseCY} Q${A.noseCX} ${A.noseCY-A.noseRY*.4} ${A.noseCX-A.noseRX} ${A.noseCY} Z" fill="${nose}"/>
+
+    <!-- mouth -->
+    <path d="M${A.noseCX} ${A.noseCY+A.noseRY*1.4} Q${A.noseCX-2} ${A.noseCY+A.noseRY*2.6} ${A.noseCX-3.5} ${A.noseCY+A.noseRY*2.2} M${A.noseCX} ${A.noseCY+A.noseRY*1.4} Q${A.noseCX+2} ${A.noseCY+A.noseRY*2.6} ${A.noseCX+3.5} ${A.noseCY+A.noseRY*2.2}" stroke="#8A5848" stroke-width="${big?1.1:.8}" fill="none" stroke-linecap="round" opacity=".7"/>
+
+    <!-- whiskers (very faint) -->
+    <g stroke="${ear}" stroke-width="${big?.7:.5}" stroke-linecap="round" opacity=".38" fill="none">
+      ${big ? `
+        <path d="M30 73 L48 72.5"/>
+        <path d="M29 78 L48 77"/>
+        <path d="M100 73 L82 72.5"/>
+        <path d="M101 78 L82 77"/>
+      ` : `
+        <path d="M13 44 L27 44.5"/>
+        <path d="M12.5 48 L26.5 47.5"/>
+        <path d="M59 44 L45 44.5"/>
+        <path d="M59.5 48 L45.5 47.5"/>
+      `}
+    </g>
+  </svg>`;
+}
+
+function buildMarkings(markType, marking, big){
+  if(!markType || !marking) return '';
+  if(big){
+    if(markType==='ragdoll'){
+      return `<path d="M65 28 L65 48" stroke="${marking}" stroke-width="22" fill="none" stroke-linecap="round" opacity=".45"/>
+              <circle cx="65" cy="54" r="20" fill="${marking}" opacity=".38"/>`;
+    } else if(markType==='tabby'){
+      return `<path d="M48 34 L52 48" stroke="${marking}" stroke-width="3" fill="none" stroke-linecap="round" opacity=".42"/>
+              <path d="M65 30 L65 46" stroke="${marking}" stroke-width="3" fill="none" stroke-linecap="round" opacity=".42"/>
+              <path d="M82 34 L78 48" stroke="${marking}" stroke-width="3" fill="none" stroke-linecap="round" opacity=".42"/>
+              <path d="M40 48 L46 54" stroke="${marking}" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".35"/>
+              <path d="M90 48 L84 54" stroke="${marking}" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".35"/>`;
+    } else if(markType==='siamese'){
+      return `<ellipse cx="65" cy="78" rx="22" ry="18" fill="${marking}" opacity=".3"/>
+              <path d="M65 22 L50 8 L47 20 Z" fill="${marking}" opacity=".45"/>
+              <path d="M65 22 L80 8 L83 20 Z" fill="${marking}" opacity=".45"/>`;
+    } else if(markType==='bicolor'){
+      return `<path d="M20 60 Q35 40 50 52 Q50 85 38 95 Q20 85 20 60 Z" fill="${marking}" opacity=".32"/>`;
+    } else if(markType==='tuxedo'){
+      return `<ellipse cx="65" cy="78" rx="16" ry="13" fill="${marking}" opacity=".55"/>`;
+    }
+  } else {
+    if(markType==='ragdoll'){
+      return `<path d="M36 12 L36 30" stroke="${marking}" stroke-width="16" fill="none" stroke-linecap="round" opacity=".45"/>
+              <circle cx="36" cy="34" r="14" fill="${marking}" opacity=".4"/>`;
+    } else if(markType==='tabby'){
+      return `<path d="M25 18 L28 28" stroke="${marking}" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".45"/>
+              <path d="M36 15 L36 26" stroke="${marking}" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".45"/>
+              <path d="M47 18 L44 28" stroke="${marking}" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".45"/>`;
+    } else if(markType==='siamese'){
+      return `<ellipse cx="36" cy="50" rx="17" ry="14" fill="${marking}" opacity=".32"/>
+              <path d="M36 6 L26 -2 L24 8 Z" fill="${marking}" opacity=".55"/>
+              <path d="M36 6 L46 -2 L48 8 Z" fill="${marking}" opacity=".55"/>`;
+    } else if(markType==='bicolor'){
+      return `<path d="M6 32 Q15 22 26 30 Q26 55 18 62 Q6 55 6 32 Z" fill="${marking}" opacity=".3"/>`;
+    } else if(markType==='tuxedo'){
+      return `<ellipse cx="36" cy="50" rx="13" ry="10" fill="${marking}" opacity=".55"/>`;
+    }
+  }
+  return '';
+}
+
+// convenience wrappers — when mbti is passed, try images/MBTI.png first, fall back to SVG
+function catFace(cfg, sz, mbti){ return catRender(cfg, sz, 'face', mbti); }
+function catFull(cfg, sz, mbti){ return catRender(cfg, sz, 'full', mbti); }
+
+function catRender(cfg, sz, variant, mbti){
+  if(!mbti) return catSvg(cfg, sz, variant);
+  const cfgEnc = encodeURIComponent(JSON.stringify(cfg));
+  // Prefer embedded base64 image; fall back to images/MBTI.png file; fall back to SVG
+  const src = (typeof CAT_IMAGES !== 'undefined' && CAT_IMAGES[mbti]) ? CAT_IMAGES[mbti] : `images/${mbti}.png`;
+  return `<span class="cat-wrap" style="display:inline-flex;width:${sz}px;height:${sz}px;align-items:center;justify-content:center;line-height:0;"><img src="${src}" alt="${mbti}" style="width:${sz}px;height:${sz}px;border-radius:50%;object-fit:cover;display:block;background:#FFF5EC;" onerror="catImgFallback(this,'${cfgEnc}',${sz},'${variant}')"/></span>`;
+}
+
+function catImgFallback(img, cfgEnc, sz, variant){
+  try {
+    const cfg = JSON.parse(decodeURIComponent(cfgEnc));
+    img.outerHTML = catSvg(cfg, sz, variant);
+  } catch(e){ /* silently skip */ }
+}
+
+const I18N = {zh:{subtitle:"你是哪种猫猫？",tagline:"15道题 · 16种猫猫人格 · 测测你的猫猫灵魂",startBtn:"开始测试",galleryLinkLand:"先看看猫猫图鉴 →",footer:"CatTI — 猫猫性格测试 · 纯属娱乐 · 喵~",prevBtn:"← 上一题",nextBtn:"继续 →",qMetaPrefix:"第 ",qMetaMid:" 题 / ",secDesc:"性格解析",secTags:"你的标签",secAltResult:"你也可能是…",secAltGallery:"也可能是…",secDims:"四个维度",secCompat:"猫际关系",secTagsGallery:"标签",shareBtn:"分享给朋友",resetBtn:"再测一次",galleryLinkResult:"看看其他猫猫 →",galleryTitle:"猫猫图鉴",gallerySub:"16种猫猫人格 · 点击查看详情",backBtn:"← 返回",takeTestBtn:"测测我是哪种",mbtiLabel:"参考人格类型 · ",altLabelResult:"分数接近，你也可能是…",altLabelGallery:"风格接近的是…",compatBest:"最佳搭档",compatRisk:"谨慎相处",trait_sparks:"闪光点",trait_skills:"隐藏技能",trait_social:"社交模式",shareToast:"已复制到剪贴板，快去分享吧 ♡",title:"CatTI",pageTitle:"CatTI — 你是哪种猫猫？",homeBtn:"← 首页",saveImgBtn:"保存图片",savingImg:"生成中…",savedImg:"已下载到你的设备 ♡",imgTagline:"你是哪种猫猫？",imgFooter:"🐱 CatTI · 猫猫性格测试",imgShareTitle:"我的猫猫人格！"},en:{subtitle:"Which cat are you?",tagline:"15 questions · 16 cat personalities · find your inner cat",startBtn:"Start the quiz",galleryLinkLand:"Browse the gallery first →",footer:"CatTI — a cat personality test · just for fun · meow~",prevBtn:"← Back",nextBtn:"Next →",qMetaPrefix:"Question ",qMetaMid:" of ",secDesc:"Personality",secTags:"Your tags",secAltResult:"You might also be…",secAltGallery:"You might also like…",secDims:"Four dimensions",secCompat:"Cat compatibility",secTagsGallery:"Tags",shareBtn:"Share with friends",resetBtn:"Take it again",galleryLinkResult:"See the other cats →",galleryTitle:"Cat Gallery",gallerySub:"16 cat personalities · tap to see details",backBtn:"← Back",takeTestBtn:"Take the quiz",mbtiLabel:"MBTI · ",altLabelResult:"Close second — you could also be…",altLabelGallery:"Similar vibe…",compatBest:"Best match",compatRisk:"Handle with care",trait_sparks:"Strengths",trait_skills:"Hidden skills",trait_social:"Social style",shareToast:"Copied! Go share ♡",title:"CatTI",pageTitle:"CatTI — Which cat are you?",homeBtn:"← Home",saveImgBtn:"Save as image",savingImg:"Generating…",savedImg:"Downloaded ♡",imgTagline:"Which cat are you?",imgFooter:"🐱 CatTI · Cat Personality Test",imgShareTitle:"My cat personality!"}};
+
+/* ═══════════════════════════════════════════
+   CAT DATA — 16 breeds × MBTI
+   (descriptions rewritten from human POV,
+    tags categorized into 3 groups)
+   ═══════════════════════════════════════════ */
+
+const C = {
+  INFJ: {breed:{zh:"布偶猫",en:"Ragdoll"},motto:{zh:"我感受到了你的情绪，也感受到了我的",en:"I feel you — and I haven't forgotten me"},desc:{zh:["你是朋友圈里那个最能看懂别人眼神的人——谁今天心事重重、谁笑得不太自然、谁在硬撑，你一眼就明白。然后你不会大张旗鼓，而是用最温柔的方式出现：递一杯水，说一句刚好的话，陪一会儿沉默。你的温柔不是讨好，是真的在乎。","你的信任很贵重，一旦给出去，就是很久很久的事。你可能不是声音最大的那个，但你是深夜被朋友发消息倾诉的那一个——因为他们知道，在你这里不会被评判，只会被认真听见。这种让人愿意把脆弱交出来的能力，本身就是一种稀缺的天赋。","你对世界的感受比大多数人更深，有时候会让你觉得累。但也正是这份敏感，让你能创造出别人做不到的连接：你记得的那些小事、你说出的那些刚刚好的话，会在朋友心里留很久。在你那么温柔地照顾别人的同时，请记得——你自己，也永远值得被同样温柔地接住。"],en:["You're the friend who actually notices what's happening in the room. When someone's laugh doesn't quite land, when they say \"I'm fine\" but aren't, when they're quiet for reasons they can't name — you catch it, often before they've figured it out themselves. And you don't make a big deal of it. You show up gently: a glass of water, the exact right sentence, a few minutes of quiet company. Your warmth isn't performance — you actually care.","Your trust is hard to earn, and once someone has it, they have it for life. You might not be the loudest voice in the group chat, but you're the one who gets the 2am messages — the stuff people can't bring themselves to say anywhere else. They know that with you, they won't be judged, they'll just be heard. Making people feel safe enough to bring out their softest parts is a rare, rare gift.","You feel the world more deeply than most people, and sometimes that's exhausting — you pick up on everyone else's emotions along with your own. But that same sensitivity is what lets you build connections no one else can. The small things you remember, the exact right words you find — those stay with people for years. While you're out there being the safe place for everyone else, please don't forget: you deserve that same softness, that same safety, held for you in return."]},traits:{sparks:{zh:["共情力拉满","洞察力惊人"],en:["Deep empathy","Scary-good intuition"]},skills:{zh:["能听出话里没说的那层","记得朋友随口讲过的小事"],en:["Hears what isn't said","Remembers every offhand thing"]},social:{zh:["信任只给少数人"],en:["Trust is earned slowly"]}},svg:{fur:"#E8D2C4",fur2:"#FBEEDF",ear:"#F0B8B0",eye:"#7AADE8",pupil:"#1A3060",nose:"#E89080",cheek:"#F4B8B0",marking:"#9C8070",markType:"ragdoll"},compat:{best:"ENTP",risk:"ESTP"},alt:"INFP",dimColor:"var(--lavender)"},
+  INTJ: {breed:{zh:"俄罗斯蓝猫",en:"Russian Blue"},motto:{zh:"我不冷漠，我只是在计划",en:"I'm not cold — I'm just strategizing"},desc:{zh:["你的脑子里永远在跑一张看不见的路线图——目标、路径、可能的风险，你在开口前已经预演过三遍。你不需要很多朋友，但留在你身边的人都是精挑细选出来的——他们知道，被你选中是一件很珍贵的事。","独处对你来说不是孤独，是充电。这份清醒和自给自足的能力，是很多人练一辈子都达不到的境界。你不浪费情绪、不随大流，你只是走在自己的节奏里，而这种从容本身，就是一种最有力的回答。","你可能偶尔被说\"太严肃\"或\"不够合群\"，但真正认识你的人都知道，你其实是在用一种最扎实的方式爱着身边的人：你不会说很多漂亮话，但你会在关键时刻给出最清醒的分析，在他们迷茫的时候指一个方向。这个世界很需要像你这样冷静清醒的人——而你自己也值得被认真对待，值得被看见那些藏在理性外表下的温柔。"],en:["There's a roadmap running in your head at all times — goals, paths, risks, contingencies. By the time you say something out loud, you've already played it through three times. You don't need a big friend group, and you're deliberate about who gets in. The people who make the cut know that being chosen by you means something.","Being alone isn't loneliness to you — it's how you recharge. You've figured out self-sufficiency in a way most people spend their whole lives trying to reach. You don't waste energy on drama, you don't follow the crowd, and you don't feel the need to justify yourself. You just do your thing at your own pace, and that quiet confidence says more than most explanations ever could.","People sometimes call you \"too serious\" or \"not really a joiner\" — but the people who actually know you understand that you love in a deeply grounded way. You don't offer empty reassurance. What you offer is clarity: the calm analysis at the worst moment, the direction when someone's lost. The world genuinely needs people who stay composed when everyone else is spinning. And you deserve to be truly seen, too — including all the warmth that lives beneath that rational exterior."]},traits:{sparks:{zh:["战略脑很强","独立判断力"],en:["Strategic mind","Independent thinker"]},skills:{zh:["三步预判能力","一眼看破套路"],en:["Three moves ahead","Sees through BS instantly"]},social:{zh:["用行动代替解释"],en:["Shows up, doesn't explain"]}},svg:{fur:"#9EB2C8",fur2:"#CCDAE4",ear:"#B0C6D4",eye:"#6AAA70",pupil:"#1A3A20",nose:"#C09A9A",cheek:null,marking:null,markType:null},compat:{best:"ENFP",risk:"ESFP"},alt:"INTP",dimColor:"var(--sky)"},
+  INTP: {breed:{zh:"斯芬克斯猫",en:"Sphynx"},motto:{zh:"我不是怪，我只是超前于这个时代",en:"I'm not weird — I'm just ahead of my time"},desc:{zh:["你对\"为什么\"的兴趣永远比\"怎么做\"更大——别人还在讨论方案，你已经在想这件事的底层逻辑到底成不成立了。你话不多，但每次开口都能把讨论带到另一个层次，因为你问的是别人没想过的问题。","搞明白一件事的那一刻比什么都让人兴奋——那种\"啊，原来是这样\"的顿悟感是你的多巴胺来源。对你来说，世界本身就是一个巨大的谜题，而你一生都在忍不住地想去拼它。","你可能被觉得\"太特立独行\"或者\"活在自己的世界里\"，但这恰恰是你最好的部分：你没有让这个世界逼你变成一个快速给答案的人。在一个人人都急着表态的时代，你是那个愿意先把问题搞清楚再说话的人——这种对真相的耐心，是一种非常非常高贵的品质。愿你永远保持这份好奇，也永远相信自己看世界的独特方式是有价值的。"],en:["You care more about \"why\" than \"how.\" While everyone else is arguing about solutions, you're the one quietly wondering if the whole premise even holds up. You don't talk much, but when you do, the conversation shifts — because you're asking something nobody else thought to ask.","Nothing feels better to you than the moment something finally clicks — that \"oh, so THAT'S how it actually works\" hit is basically your dopamine. For you, the world is one giant puzzle, and you spend your whole life unable to stop trying to fit the pieces together.","People sometimes call you \"too independent\" or \"off in your own world\" — but that might be the best thing about you. You've refused to let the world pressure you into being someone who performs quick answers. In an era where everyone rushes to have an opinion, you're the person willing to actually understand the question first. That patience for truth is a genuinely rare, genuinely valuable trait. Stay curious as long as you live — and trust that your particular way of seeing things matters."]},traits:{sparks:{zh:["底层思考","逻辑清晰"],en:["First-principles thinker","Crystal-clear logic"]},skills:{zh:["拆解复杂问题","在混乱里找出本质"],en:["Breaks down hard problems","Finds the signal in the noise"]},social:{zh:["有趣的话题才回"],en:["Only bites if it’s interesting"]}},svg:{fur:"#D4BCA0",fur2:"#ECDCC8",ear:"#C8AC88",eye:"#90A870",pupil:"#2A3A18",nose:"#D89890",cheek:null,marking:null,markType:null},compat:{best:"ENTJ",risk:"ESFJ"},alt:"INTJ",dimColor:"var(--sage)"},
+  ENTJ: {breed:{zh:"暹罗猫",en:"Siamese"},motto:{zh:"要喵就喵最大声的那种",en:"If you're going to meow, meow loud"},desc:{zh:["你是那种说\"我来带\"就真的会把事情带起来的人——嗓门未必大，但方向总是对的。你不爱绕弯子，因为你算过，直接说能省三小时。你给人的第一印象是雷厉风行、目标感十足，而这份\"先把事做成\"的底气，其实很多人一辈子都练不出来。","真正了解你之后会发现——一旦你认定了一个人，那份忠诚非常稳，稳到用一辈子来证明自己没选错。你表达关心的方式不是说漂亮话，而是把对方要用的东西都替他准备好，把他担心的事替他搞定。这种\"我来搞定\"，就是你最深的温柔。","你可能偶尔被说\"太强势\"或\"太直接\"，但在一个到处充满空话的世界里，像你这样说到做到的人其实非常稀缺。你撑起了太多人的信心——因为只要你在，大家就知道事情不会乱。但请也记得给自己一个喘息的空间：你不用永远是那个扛下所有东西的人，偶尔也可以把事情交给别人，让自己被好好照顾一会儿。"],en:["You're the kind of person who says \"I got it\" and actually handles it. You're not always the loudest one in the room, but you're almost always the one pointing everyone in the right direction. You don't sugarcoat or tiptoe — you've done the math, and saying it directly saves everyone about three hours. That ability to just make things happen is honestly something most people spend a lifetime trying to develop.","Once you decide someone is your person, though, the loyalty runs deep — the kind where you spend the next decade quietly proving they picked the right friend. You don't show love by saying the right things. You show love by getting the problem handled, by preparing the thing they'll need, by taking on the worry they couldn't carry alone. That \"I'll deal with it\" energy IS your softest form of care.","People sometimes call you \"too intense\" or \"too direct\" — but in a world full of empty words, someone who means what they say is rare. You hold things together for a lot of people just by being there; they know that if you're on it, everything will be okay. But please remember: you don't have to be the one carrying everything, all the time. Occasionally you're allowed to let someone else take the wheel, to receive care instead of constantly providing it. That's not weakness — that's letting the world be good to you back."]},traits:{sparks:{zh:["领导力天然","执行力极强"],en:["Natural leader","Actually gets it done"]},skills:{zh:["十秒内出方案","一句话说清复杂问题"],en:["Has a plan in 10 seconds","Explains hard stuff in one line"]},social:{zh:["朋友圈小但铁"],en:["Small circle, ride-or-die"]}},svg:{fur:"#E4D0B8",fur2:"#F6EADA",ear:"#8C6A4A",eye:"#4AA888",pupil:"#0A2A1A",nose:"#D8A8A0",cheek:null,marking:"#6A4828",markType:"siamese"},compat:{best:"INTP",risk:"ISFP"},alt:"ESTJ",dimColor:"var(--gold)"},
+  ENTP: {breed:{zh:"阿比西尼亚猫",en:"Abyssinian"},motto:{zh:"规则？那是用来改写的",en:"Rules? Those are just suggestions"},desc:{zh:["你的大脑是个永不关机的点子工厂——别人说\"这样不行\"，你脑子里已经冒出三个\"那这样呢\"。你会在半夜两点突然给朋友发消息讨论一个奇怪的想法，你坚信所有被广泛接受的事情都值得再问一遍\"凭什么\"。","和你在一起的人永远不会无聊——你是他们生活里的那个惊喜按钮，让每一天都多一点意想不到的可能。这种不被规则束缚、永远在探索的能量，是一种让人忍不住想靠近的自由感。你是朋友圈里真正能让大家\"活得更大\"的那个人。","你可能偶尔被觉得\"太跳脱\"或者\"想法太多\"，但千万不要因此收起自己的锋芒。这个世界太需要那些愿意问\"为什么不能\"的人了——很多伟大的想法，最初都是在像你这样的人半夜冒出来的。你的不按常理出牌，不是缺点，是一种礼物。保持那份好奇，保持那份少年气——你身上的光，是很多人一辈子都在羡慕的东西。"],en:["Your brain doesn't have an off switch. Someone says \"that's impossible,\" and three counter-ideas are already forming before they finish the sentence. You're the friend who texts at 2am with a genuinely unhinged idea, and you believe anything \"everyone knows is true\" is worth poking at one more time.","Nobody's ever bored around you. You're basically a plot twist in human form — the person who makes an ordinary Wednesday feel like it might go anywhere. That refusal to stay inside the lines, that itch to keep exploring — there's a freedom to it that people gravitate toward. You're the one who quietly teaches your friends how to live bigger.","People sometimes call you \"too scattered\" or \"too many ideas\" — but please, don't ever dim that. The world desperately needs people who ask \"why not though?\" Most great ideas started out as a weird 2am thought in someone exactly like you. Your refusal to play by the default rules isn't a flaw — it's a gift. Stay curious. Stay a little bit of a kid forever. The spark you carry is something most people spend their whole lives wishing they had."]},traits:{sparks:{zh:["点子王","灵活应变"],en:["Idea machine","Thinks on their feet"]},skills:{zh:["现场即兴一套","把冷场变热场"],en:["Improvises plans on the fly","Turns awkward silences into energy"]},social:{zh:["聊得来能彻夜"],en:["Will stay up talking till 4am"]}},svg:{fur:"#C4A050",fur2:"#E8D0A0",ear:"#987828",eye:"#A08020",pupil:"#2A1E00",nose:"#D89880",cheek:null,marking:"#8A6020",markType:"tabby"},compat:{best:"INFJ",risk:"ISFJ"},alt:"ENFP",dimColor:"var(--gold)"},
+  INFP: {breed:{zh:"波斯猫",en:"Persian"},motto:{zh:"世界太吵，被子太舒服",en:"The world's too loud, my blanket's too cozy"},desc:{zh:["你对世界的感受细腻到让人羡慕——一首歌、一阵风、一个路人的眼神都能让你走神很久。你有一整个只对极少数人开放的内心世界，那里温柔、浪漫、想象力爆棚，没有被外界的粗糙磨损过。","独处是你给自己充电的方式，也是你保持灵魂柔软的秘密。一旦你决定为某件事全力以赴，那份专注和浓度会让身边的人惊讶——你身上藏着很多人一辈子都找不到的那种光。最棒的是，这种光不需要被证明，它只是一直在那里。","你可能偶尔会觉得自己\"太敏感\"或者\"格格不入\"，会怀疑自己是不是应该更\"正常\"一点。但请相信我：那些让你与众不同的东西，恰恰是你最宝贵的东西。你看世界的方式别人看不到，你说出来的话能让人心里某个角落突然亮起来。在一个越来越讲效率、越来越少停下来感受的时代，像你这样愿意慢慢感受一切的人，是这个世界的氧气——请继续做自己，慢慢地、柔软地，按你自己的节奏活下去。"],en:["Your sensitivity to the world is something to envy — a song, a breeze, a stranger's passing glance can send you somewhere for a full hour. You have this whole inner world open only to a precious few, and when they get let in, they find it's tender, romantic, and full of imagination that the outside hasn't managed to roughen up.","Time alone isn't you hiding — it's how you stay soft in a world that isn't. And when you finally decide to pour yourself into something you care about, the intensity catches everyone off guard. There's a real light in you, the kind most people spend their whole lives looking for. The best part? You don't have to prove it. It's just there.","You might sometimes feel \"too sensitive\" or like you don't quite fit in — wondering if you should be more \"normal.\" Please trust this: the things that make you different are exactly the things that make you irreplaceable. You see the world in ways others can't, and the things you say land somewhere soft in people that nothing else could reach. In an era obsessed with efficiency, with never stopping to feel — people like you are oxygen for the rest of us. Please keep being you, slowly, softly, on your own timeline. The world needs that."]},traits:{sparks:{zh:["共情与审美","忠于自己"],en:["Deep feeler","Loyal to yourself"]},skills:{zh:["把情绪写成故事","在平凡里看到诗"],en:["Turns feelings into stories","Finds poetry in small things"]},social:{zh:["慢热但深入"],en:["Slow to open up, worth the wait"]}},svg:{fur:"#D8C0C8",fur2:"#F0E0E8",ear:"#E0B0C0",eye:"#C09048",pupil:"#3A2008",nose:"#E0A0A0",cheek:"#F0C0C8",marking:null,markType:null},compat:{best:"ENFJ",risk:"ESTJ"},alt:"ISFP",dimColor:"var(--lavender)"},
+  ENFJ: {breed:{zh:"缅因猫",en:"Maine Coon"},motto:{zh:"每只猫都值得被爱，包括你",en:"Everyone deserves love — including you"},desc:{zh:["你是朋友圈里永远在张罗的那个人——谁生日、谁搬家、谁最近心情不好，你都记得。你有一种让人放松下来的能量，走到哪里哪里就是温暖的中心。和你在一起，别人莫名会觉得自己更好了，因为你真的相信每个人都有被看见的价值。","对你认定的人，你愿意走到最远的那个地方——凌晨接机、搬家帮忙、情绪崩溃时的深夜电话，你都在。你让大家知道\"不管怎样都有人会在\"，而这种确定感是这个世界最珍贵的东西之一。","但请你一定一定记得——你自己也永远值得被这样对待。太多像你这样温暖的人，把所有的爱都给了别人，却忘了给自己留一份。你不是一个\"照顾别人的工具\"，你是一个有自己的情绪、自己的需要、自己的脆弱的人。你给出去的那份温柔，请也允许别人回馈给你。这个世界因为有你而变得柔软了一些，而你，也值得世界回赠给你同样的柔软。"],en:["You're the one who remembers the birthdays, organizes the group hangouts, and checks in when someone's been quiet too long. There's something about being around you that makes people exhale — a \"thank god, someone's got this\" feeling. Whatever room you walk into tends to warm up a few degrees. People leave time with you feeling a little better about themselves, because you genuinely believe every single person is worth paying attention to.","For the people you've decided are yours, you'll go the longest distance — the 3am airport pickup, the help moving, the call when everything falls apart. You make it so the people around you know they're never really alone, and that kind of certainty is one of the rarest, most precious things a person can give.","But please, please remember — you deserve to be treated exactly the same way. So many people like you give everything to others and forget to save anything for themselves. You're not a \"support system\" someone plugs into. You're a whole person with your own feelings, your own needs, your own moments of falling apart. The softness you pour into the world — please let it come back to you, too. The world is gentler because you're in it. You deserve to live in that same gentleness."]},traits:{sparks:{zh:["照顾欲满格","感召力强"],en:["Built-in caretaker","Inspiring presence"]},skills:{zh:["记得每个人的喜好","化解尴尬空气"],en:["Remembers everyone's favorite things","Defuses awkward moments"]},social:{zh:["容易被依赖"],en:["The person everyone leans on"]}},svg:{fur:"#B8A878",fur2:"#D8CCA8",ear:"#987850",eye:"#88A030",pupil:"#1A2800",nose:"#D8A888",cheek:"#E8C8A0",marking:"#8A7040",markType:"tabby"},compat:{best:"INFP",risk:"INTP"},alt:"ESFJ",dimColor:"var(--sage)"},
+  ENFP: {breed:{zh:"索马里猫",en:"Somali"},motto:{zh:"生活就是要充满惊喜，包括我带来的那些",en:"Life should be full of surprises — including mine"},desc:{zh:["你同时有七个开启中的计划，但这不影响你现在满腔热情地开始第八个。你对人、对事、对世界的好奇心是一种近乎生理的冲动——你会一头扎进某件事三天三夜，然后带着新发现又跳到下一件。这种永远保持\"刚认识这个世界\"的心态，本身就是一种奇迹。","和你在一起的人都会被你点燃——你最大的魅力就是让别人相信\"生活真的可以这么有意思\"。你身上有一种孩子气的纯粹，像个永远在发现新玩具的灵魂。这份对世界持续着迷的能力，是很多大人早就弄丢的东西。","你可能偶尔会觉得自己\"太善变\"或者\"不够稳定\"，看着身边那些 life plan 清清楚楚的朋友，怀疑自己是不是有问题。但其实你一点问题都没有——你的\"广\"不是缺点，是你感受世界的方式。你会经历比大多数人更多的事情、认识更多有趣的人、留下更多让自己想起来会笑的瞬间。这才是活着，而且是非常非常漂亮地活着。愿你永远保持那种眼睛发亮的样子。"],en:["You have seven projects going at once, none of them finished, and that is absolutely not going to stop you from starting project number eight with your whole heart today. Your curiosity about people, ideas, the whole world is almost physical — you can feel it pulling you in. You dive into something for three days, fall completely in love with it, then leap to the next and drag everyone along for the ride. Staying this delighted by life itself is kind of a miracle.","Being around you is contagious. Your superpower is making other people remember that life can actually be this fun. There's a childlike wonder you never grew out of, a soul that keeps finding new toys to be delighted by. Most adults lose that somewhere along the way. You held onto it — and the people around you are better for it.","You might sometimes feel \"too scattered\" or \"not stable enough,\" looking at friends whose life plans seem neatly mapped out and wondering if something's wrong with you. Nothing's wrong with you. Your wide-openness isn't a bug — it's how you experience the world. You'll live more stories than most people, meet more interesting humans, collect more memories that make you smile years later. That's living — and it's living beautifully. Please keep that eyes-lit-up look for as long as you can."]},traits:{sparks:{zh:["热情感染力","创意无限"],en:["Infectious enthusiasm","Endless creativity"]},skills:{zh:["跟陌生人五分钟熟","把周末过成剧本"],en:["Best friends with strangers in 5 minutes","Turns weekends into stories"]},social:{zh:["自来熟顶配"],en:["Instant-friend energy"]}},svg:{fur:"#C88050",fur2:"#E8B880",ear:"#A06028",eye:"#70A050",pupil:"#1A2A08",nose:"#D89878",cheek:"#E8B888",marking:"#985028",markType:"tabby"},compat:{best:"INTJ",risk:"ISTJ"},alt:"ENTP",dimColor:"var(--peach)"},
+  ISTJ: {breed:{zh:"英国短毛猫",en:"British Shorthair"},motto:{zh:"计划赶不上变化？那就不要有变化",en:"Plans can't keep up with change? Easy — no change"},desc:{zh:["你喜欢确定性——日程、流程、checklist，这些不是死板，是你给自己和别人的一份安心。在这个一切都变得很快的年代，你的稳定本身就是一种稀缺品质：当所有人都慌的时候，你是那个还在继续按计划做事的人。","朋友说你是那种永远会接电话、永远会兑现承诺的人。你不会说漂亮话，但你答应过的事会一件一件给你办好。这种朴素的靠谱其实是最深沉的温柔——让身边的人知道不管走到多远，都有一个稳稳的地方可以回。","你可能偶尔会被说\"太传统\"或\"太保守\"，但请相信：在一个越来越浮躁、越来越追风的世界里，像你这样脚踏实地的人是真正让一切运转起来的人。那些被大家视为理所当然的\"事情就这样顺顺利利地成了\"，背后往往站着一个像你一样默默做完每一步的人。你自己也值得偶尔被感谢、被看见、被好好对待——不是因为你做了什么，只是因为你这个人，就很好。"],en:["You like knowing what to expect. Schedules, systems, checklists — to you, these aren't rigidity, they're how you keep life manageable for yourself and everyone around you. In an era where nothing stays the same for five minutes, your steadiness is genuinely rare: when everyone else is panicking, you're the one still calmly getting things done.","Ask your friends and they'll tell you: you're the one who always picks up the phone, the one whose word actually means something. You don't do big speeches or grand gestures. You just quietly follow through, one promise at a time. That kind of reliability is its own form of love — the deepest kind, the kind that lets people know that no matter how far they roam, there's always somewhere steady to come back to.","People sometimes call you \"too traditional\" or \"too cautious\" — but please trust this: in a world that gets more scattered and trend-chasing every year, someone grounded like you is what actually keeps everything running. All those things that seem to \"just work out\" — behind every one of them is usually a person like you quietly handling each step. You deserve to be seen and thanked sometimes, too — not for what you've done, just for who you are. Because who you are is already so much."]},traits:{sparks:{zh:["靠谱","责任感爆表"],en:["Rock-solid","Serious responsibility energy"]},skills:{zh:["把混乱整理得井井有条","记住所有重要日期"],en:["Turns chaos into order","Never forgets an important date"]},social:{zh:["答应的事一定做到"],en:["Always follows through"]}},svg:{fur:"#A8B4C4",fur2:"#C8D0D8",ear:"#90A0B0",eye:"#D89840",pupil:"#2A1800",nose:"#C0A0A0",cheek:null,marking:null,markType:null},compat:{best:"ESFP",risk:"ENFP"},alt:"ISFJ",dimColor:"var(--sky)"},
+  ISFJ: {breed:{zh:"苏格兰折耳猫",en:"Scottish Fold"},motto:{zh:"我只是想让大家都开心",en:"I just want everybody to be okay"},desc:{zh:["你记得所有朋友的生日、对象名字、最近在忙的事、不吃香菜这件小事。你的关心从不张扬，而是以一种\"刚刚好\"的方式出现——天冷了提醒带外套，朋友聚会悄悄把角落里那个人拉进话题，悄悄把某个人不喜欢吃的菜挪走。","你让身边的每个人都觉得安全。这种让人心里踏实的能力是一种难得的天赋——很多人一辈子都学不会怎么让别人放下戒备地靠近。你是朋友们心里那个\"不管怎样都会在\"的人，那份安定感是他们在世界里摇摇晃晃时还能抓住的一根线。","你这种温柔太容易被世界视作理所当然——大家习惯了你会记得所有事，习惯了你会默默做完所有琐碎，甚至忘了这些本来是需要用心和精力的。所以请允许我郑重地告诉你：你做的这一切，是真的很珍贵，不是\"应该的\"。你也永远值得被同样温柔地对待——被记住你的喜好、被悄悄照顾、被在心里放在一个很重要的位置。你给出去的那份爱，请也允许别人返还给你。"],en:["You remember everyone's birthday. You know your friends' partners' names, what they're stressed about this week, who can't stand cilantro. Your care isn't loud — it shows up in all the small ways: telling someone to grab a jacket, pulling the shy person in the corner into the conversation, quietly moving the dish someone doesn't like out of their reach.","Being around you feels safe in a way that's hard to explain. Making people feel safe enough to let their guard down is a gift most people spend their whole lives trying to learn. You're the person in your friends' minds who will \"always be there, no matter what\" — and that certainty is something they hold onto when the world feels shaky.","Your kind of warmth gets taken for granted too easily — people get used to you remembering everything, used to you quietly handling the small invisible work, and sometimes forget that all of this takes real heart and real effort. So please let me say this clearly: what you do is genuinely precious. It's not \"just what you do.\" You deserve to be treated with the same softness you hand out — to be remembered, quietly taken care of, held as someone important in someone's life. Please let the love you give come back to you, too."]},traits:{sparks:{zh:["细腻体贴","可靠温暖"],en:["Thoughtful and warm","Quietly comforting"]},skills:{zh:["记得朋友喜欢的小事","察觉别人的欲言又止"],en:["Remembers the little things","Notices what people almost said"]},social:{zh:["朋友有需要随叫随到"],en:["There when it counts"]}},svg:{fur:"#C8B8A0",fur2:"#E0D4C0",ear:"#E0C0B0",eye:"#B89040",pupil:"#2A1A00",nose:"#D8A898",cheek:"#E8C8B8",marking:null,markType:null},compat:{best:"ESFP",risk:"ENTP"},alt:"INFJ",dimColor:"var(--peach)"},
+  ESTJ: {breed:{zh:"东方短毛猫",en:"Oriental Shorthair"},motto:{zh:"没有规矩不成方圆，我说的规矩",en:"No structure, no results — I make the structure"},desc:{zh:["你在群里最常说的一句话是\"我来建个文档\"。你天生对秩序有要求——开会要有议程、事情要有 deadline、讨论要有结论，因为你真心相信有序的生活能让每个人都更轻松。这不是死板，是一种替所有人着想的方式。","你的执行力让人踏实，只要你在，事情就不会烂尾。对你来说，把一件事从混乱做到清晰本身就很爽——而你身边的人都在默默沾你这种\"有谱\"的光。在任何一个时代，能把事情做成的人都是稀缺资源，而你天然就拥有这种能力。","你可能偶尔会被说\"太强势\"或者\"太像老板\"，但认识你的人都知道，你之所以推动大家做事，是因为你真心希望大家都过得好、每一件事都有好结果。这种\"扛起责任\"的天性是很多人没有的——而你自己偶尔也需要允许自己放手：不是所有事情都得靠你搞定，偶尔也可以松一松肩膀，让世界自己运转一会儿。你已经做得很好了，真的。"],en:["Your most-sent message in any group chat is \"I'll put together a doc.\" You need structure the way other people need coffee — meetings should have agendas, tasks should have deadlines, conversations should end with actual next steps. You're not being rigid; you genuinely believe life runs better for everyone when someone's keeping track. It's one of the ways you love people.","People relax when you're on the job. If you're involved, nothing's falling through the cracks. Taking a chaotic situation and pulling it into something clean and workable just scratches a deep itch for you — and everyone around you is quietly benefiting from that energy. Being able to actually get things done is rare in any era. You just naturally carry it.","People sometimes call you \"too intense\" or \"too boss-like\" — but the people who really know you understand that you push things forward because you genuinely want everyone to end up okay, and every project to actually work out. That \"I'll take responsibility\" instinct isn't something most people have. And sometimes, you're allowed to let go, too — not everything has to run through you. Occasionally you can loosen your shoulders and let the world handle itself for a while. You're doing really well. You've been doing really well."]},traits:{sparks:{zh:["执行力拉满","秩序感强"],en:["Gets it done, no drama","Lives by the plan"]},skills:{zh:["三句话把会议开完","在混乱里建立流程"],en:["Ends meetings in three sentences","Builds systems out of mess"]},social:{zh:["朋友知道你靠谱"],en:["Friends call you when it matters"]}},svg:{fur:"#A8B898",fur2:"#C8D4C0",ear:"#80A068",eye:"#50A848",pupil:"#0A2008",nose:"#C8A898",cheek:null,marking:null,markType:null},compat:{best:"ISFP",risk:"INFP"},alt:"ENTJ",dimColor:"var(--sage)"},
+  ESFJ: {breed:{zh:"美国短毛猫",en:"American Shorthair"},motto:{zh:"只要大家都好，我就好",en:"As long as everyone's good, I'm good"},desc:{zh:["你是聚会里确保所有人都聊得上话的那个人——会注意到角落里那个安静的朋友，会默默把话题绕过某人的雷点，会记得今天是谁第一次来所以多介绍一下。你的亲和力不是表面的热情，是真心想让每个人都舒服。","你有一种让房间瞬间变温暖的超能力，走到哪里哪里的气氛就会柔软下来。你让朋友们觉得\"有你在真好\"——这句话听起来简单，但其实是一个人能给另一个人最珍贵的礼物之一。","你太习惯照顾所有人了，有时候会忘了自己也有情绪需要被照顾。当你心里累的时候，请告诉自己这个重要的事实：你的存在不是靠\"对别人有用\"来证明的。你这个人，本身就很值得被爱——不是因为你能让大家开心，只是因为你就是你。请也允许朋友们回过头来照顾你，让你在他们面前也可以做那个偶尔累了、偶尔需要被安慰的人。你已经付出得够多了。"],en:["You're the one at every party making sure everyone's okay. You notice the friend who's gone quiet in the corner, you steer conversation away from touchy subjects before anyone realizes, you catch that this is someone's first time here and make sure they get properly introduced. Your warmth isn't performative — you genuinely want everyone in the room to feel at ease.","You have this way of making a space feel warmer the second you walk in. The whole vibe softens around you. You make your friends feel like \"it's good that you're here\" — which sounds small but is honestly one of the rarest, most precious things a person can give another person.","You're so used to taking care of everyone that sometimes you forget you have feelings that need tending, too. When you're tired inside, please remember this important truth: your worth isn't measured by how useful you are to others. You, as a whole person, are deeply worth loving — not because you make people happy, just because you're you. Please let your friends take care of you back sometimes. Let yourself be the one who's tired, who needs a little reassurance, who gets to receive for once. You've been giving enough. More than enough."]},traits:{sparks:{zh:["亲和力顶配","氛围担当"],en:["Natural host energy","Keeps the vibe alive"]},skills:{zh:["照顾到每一个人","化解社交尴尬"],en:["Makes sure no one is left out","Smooths over awkward moments"]},social:{zh:["聚会发起人"],en:["The one who gets the party going"]}},svg:{fur:"#C0B088",fur2:"#D8CCA8",ear:"#A09068",eye:"#C89830",pupil:"#2A1800",nose:"#D8A898",cheek:"#E8C8A0",marking:"#987848",markType:"tabby"},compat:{best:"ISFP",risk:"INTP"},alt:"ENFJ",dimColor:"var(--peach)"},
+  ISTP: {breed:{zh:"挪威森林猫",en:"Norwegian Forest Cat"},motto:{zh:"不废话，直接上",en:"Less talking, more fixing"},desc:{zh:["你话不多，但家里坏了什么你都能修。你遇到问题的第一反应不是抱怨，而是拆开看看怎么回事——这种冷静务实在浮躁的世界里特别难得。你是那种别人描述问题描述了十分钟，你看一眼就说\"我看看\"然后五分钟解决的人。","关键时刻你从不缺席。遇到真正的麻烦，大家第一个想到的就是你——因为你给人的感觉是\"只要他在，问题就不算问题\"。你不说\"我爱你\"，但你会默默把对方要用的东西修好、把对方担心的事搞定。这种沉默的可靠本身就是一种高级浪漫。","你可能不太擅长说情话，也不太喜欢长篇大论的情绪表达——这完全没问题。爱有很多种表达方式，你的那种是\"行动型\"的，而且质量非常高：别人口若悬河的承诺，比不过你亲手修好的那件东西。请不要因为自己不善于情绪化地表达就觉得自己\"不够温柔\"——你这种从容、务实、关键时刻靠得住的人，是很多人心里最稳的那颗石头。"],en:["You don't say much, but if something breaks, you're the one who can fix it. Your first instinct when something goes wrong isn't to complain — it's to take the thing apart and figure out what's going on. That kind of calm, hands-on competence is honestly hard to find in a world where everyone's loud about everything. You're the person who listens to someone describe a problem for ten minutes, glances at it, and has it sorted in five.","When something actually matters, you show up. When real trouble hits, you're the first person people think of, because being around you gives off this unshakeable \"if they're here, we're going to be fine\" energy. You don't say \"I love you\" — you just quietly fix the thing they needed fixed. That kind of quiet reliability is its own high-end romance.","You might not be great at saying sweet things, and you might find long emotional conversations exhausting — that's totally fine. Love comes out in lots of ways, and yours is the action-based kind, and it's high-quality. A hundred flowery promises from someone else will never beat the thing you quietly fixed with your hands. Please don't think you're \"not warm enough\" just because you don't express it verbally. That calm, grounded, show-up-when-it-matters-ness of yours — for a lot of people, you're the most solid thing in their life."]},traits:{sparks:{zh:["动手能力强","冷静沉着"],en:["Good with their hands","Cool under pressure"]},skills:{zh:["一眼看出问题在哪","关键时刻顶上去"],en:["Spots the problem instantly","Shows up when it counts"]},social:{zh:["话不多但都在点上"],en:["Few words, all of them land"]}},svg:{fur:"#A0B098",fur2:"#C4D0B8",ear:"#80A070",eye:"#68A858",pupil:"#0A2A08",nose:"#C8A898",cheek:null,marking:"#789060",markType:"tabby"},compat:{best:"ESTJ",risk:"ENFJ"},alt:"INTJ",dimColor:"var(--sage)"},
+  ISFP: {breed:{zh:"缅甸猫",en:"Burmese"},motto:{zh:"我只在我想的时候亲近你",en:"I'll come to you when I feel like it"},desc:{zh:["你有一套自己的审美和节奏，不跟风——穿什么、吃什么、周末怎么过，你都只按自己的感觉来。你对生活里每个细节都感受得特别浓，一块完美的阳光光斑、一首突然合心意的歌就能让你开心一整天。","你表达喜欢的方式是\"让你进入我的安静\"：如果你邀请一个人一起发呆、一起什么都不做，那就是你最大的诚意。在一个追求表达、追求被看见的时代，你选择了用存在本身来表达爱——这份简单而纯粹的温柔是很多人羡慕不来的。","你可能偶尔会被说\"太慢热\"或者\"太自我\"，但那些真正了解你的人知道，你内心其实非常热烈——只是你选择把这份热烈留给真正值得的时刻和真正值得的人。你不是冷，你是珍惜。愿你永远保持自己的节奏，永远相信你感受世界的方式是对的，永远不被那些催你\"快一点\"的声音动摇。你慢一点，是因为你更认真地活着。"],en:["You've got your own taste and your own pace, and you don't really care what's trending. What you wear, what you eat, how you spend a Saturday — it all comes down to what actually feels right. You notice the small things everyone else walks past, and a perfect patch of afternoon sunlight or a song that suddenly hits can genuinely make your whole day.","The way you show love is by letting someone into your quiet. If you ask someone to just sit around and do nothing with you, that's the real thing — that's your version of saying \"I trust you.\" In an era obsessed with expression, with being seen, with performing affection — you chose to love by just being present. Not a lot of people can pull that off.","People sometimes call you \"too slow to open up\" or \"too private\" — but the people who actually know you understand that your inside is burning with color. You just choose to save it for moments and people who deserve it. You're not cold. You're selective. Please keep moving at your own pace, keep trusting that your way of experiencing the world is the right one for you, and keep ignoring the voices telling you to hurry up. You're slower because you're living more carefully. That's a feature, not a flaw."]},traits:{sparks:{zh:["审美独到","活在当下"],en:["Unique taste","Lives in the moment"]},skills:{zh:["从小事里找到美","不被潮流带跑"],en:["Finds beauty in small things","Doesn't chase trends"]},social:{zh:["只对喜欢的人热络"],en:["Only warm with your people"]}},svg:{fur:"#C0A898",fur2:"#D8C8B8",ear:"#A08878",eye:"#C09838",pupil:"#2A1800",nose:"#D8A898",cheek:"#E8C0B0",marking:null,markType:null},compat:{best:"ESFJ",risk:"ENTJ"},alt:"INFP",dimColor:"var(--peach)"},
+  ESTP: {breed:{zh:"孟加拉猫",en:"Bengal"},motto:{zh:"先行动，后思考，或者根本不思考",en:"Act first, think later, don't think at all"},desc:{zh:["你是朋友圈里\"说走就走\"的那个——周五晚上突然提议明天去另一个城市，第二天早上真的已经在高铁上。你胆子大、反应快、不怕丢脸，走到哪里哪里就是场子的中心。","你相信想太多会错过最好的时机，而事实证明你是对的——你活过的那些瞬间，很多人一辈子都没机会体验。和你做朋友的人都是幸运的，因为你让他们想起来——人生本来就是要被活出来的，不是被计划出来的。","你可能偶尔会被说\"太冲动\"或\"不够沉稳\"，但请不要因此觉得自己应该变得\"规矩\"一些。你的那种直接、那种当下感、那种敢拼敢赌的劲，是很多人终其一生都在羡慕的东西。很多被我们记住的 moments，背后都是像你这样愿意\"管他呢，先做了再说\"的人。愿你永远这样发光，愿你永远有故事可以讲。"],en:["You're the \"let's just go\" friend in every group chat. Friday night you pitch a road trip for tomorrow, and by Saturday morning you're actually on the road. You're bold, you react fast, you don't care about looking silly, and somehow you always end up at the center of whatever's going on.","You firmly believe that overthinking makes you miss the good stuff — and honestly, you've been right about that more times than not. The things you've done, the stories you have, most people will never experience in their entire lives. Your friends are lucky, because being around you is a constant reminder that life is meant to be lived, not just planned.","People sometimes call you \"too impulsive\" or \"not grounded enough\" — please, don't let that push you toward becoming more \"sensible.\" That directness, that in-the-moment presence, that willingness to just go for it — those are qualities most people spend their whole lives wishing they had. A lot of the memories we end up treasuring, they're made by people exactly like you, the ones willing to say \"screw it, let's do it.\" Keep shining like that. Keep collecting stories to tell."]},traits:{sparks:{zh:["行动力爆棚","临场反应好"],en:["High-voltage energy","Quick on your feet"]},skills:{zh:["把无聊变刺激","危机中保持冷静"],en:["Turns boredom into adventure","Calm in a crisis"]},social:{zh:["说走就走型"],en:["\"Let’s just go\" energy"]}},svg:{fur:"#C8A868",fur2:"#E0C898",ear:"#987828",eye:"#A08820",pupil:"#1A1400",nose:"#D89878",cheek:null,marking:"#806020",markType:"tabby"},compat:{best:"ISTJ",risk:"INFJ"},alt:"ENFP",dimColor:"var(--gold)"},
+  ESFP: {breed:{zh:"橘猫",en:"Orange Tabby"},motto:{zh:"好吃好喝好心情，人生圆满",en:"Good food, good drinks, good vibes — that's the whole thing"},desc:{zh:["你坚信快乐才是正经事——别人焦虑未来，你已经吃到了第二顿下午茶。你看明白了一件简单又深刻的事：再怎么想也没用，不如先把眼前这顿饭吃开心。","你的快乐是会感染的——身边的人跟你待久了也会开始相信生活没那么沉重。你这种\"已经把生活本质想明白了\"的从容，是一份别人用钱都买不来的礼物。你身上那种\"我就是要好好活着\"的气场，让很多人在焦虑的时候突然松了一口气。","你可能偶尔会被说\"太不正经\"或者\"活得太随意\"，但其实你才是真正活得最通透的那一类人。你明白很多大人到死都没明白的事：人生不是一道必须要解出来的题，而是一趟必须要被享受的旅程。愿你永远保持这份不被世界绷紧的能力，永远相信享受生活本身就是一种智慧——而且是一种很多人穷尽一生都达不到的智慧。体重？没事，随它去。"],en:["You firmly believe that having a good time is the serious work. Everyone else is stressing about the future, and you're already on your second snack of the afternoon. You figured something out a long time ago, and it's simple: worrying doesn't change the outcome, so you might as well enjoy the meal in front of you right now.","Your happiness is contagious — people who hang out with you long enough start to believe life isn't supposed to be so heavy after all. The way you've already figured out what actually matters — that easy, grounded thing you've got going on — is a gift money can't buy. That \"I'm just gonna enjoy this\" energy makes anxious people around you breathe out for the first time in a week.","People sometimes call you \"not serious enough\" or \"too laid back\" — but honestly, you're the one living with the clearest head. You've figured out something a lot of grown adults never figure out: life isn't a problem to solve, it's a thing to enjoy. Keep refusing to let the world tighten you up. Keep trusting that knowing how to enjoy your own life is genuinely wisdom — the kind most people spend their whole lives trying to reach. Weight? Whatever. Let it go wherever it wants."]},traits:{sparks:{zh:["快乐哲学","人间小太阳"],en:["Lives for the good times","Walking sunshine"]},skills:{zh:["把普通事过成节日","让焦虑的人放松"],en:["Makes ordinary days feel like a celebration","Gets anxious people to chill"]},social:{zh:["饭局C位"],en:["The life of every dinner"]}},svg:{fur:"#E8A050",fur2:"#F8D8A0",ear:"#C07828",eye:"#C89020",pupil:"#1A1200",nose:"#E0A088",cheek:"#F0C888",marking:"#C07020",markType:"tabby"},compat:{best:"ISTJ",risk:"INTJ"},alt:"ENFP",dimColor:"var(--gold)"},
+};
+
+/* ═══════════════════════════════════════════
+   QUIZ QUESTIONS — language refreshed
+   (same scenarios, same weights, more vivid)
+   ═══════════════════════════════════════════ */
+
+const QS = [
+  {text:{zh:"铲屎官刚到家，你会：",en:"Your human just got home. You:"},opts:[{text:{zh:"立刻冲过去绕腿八圈，疯狂蹭叫",en:"Sprint over. Wrap around their legs. Meow nonstop."},w:{E:2}},{text:{zh:"瞥一眼：\"哦是你。\" 翻身继续睡",en:"One glance. \"Oh, it's you.\" Flop over. Back to sleep."},w:{I:2}},{text:{zh:"背对门口认真舔毛，但左耳一直朝着他",en:"Groom yourself facing away. Left ear tracks their every move."},w:{I:1}},{text:{zh:"优雅走过去蹭一下手，再慢慢带他到空食盆前",en:"Rub their hand, then walk them over to the empty food bowl."},w:{E:1,F:1}}]},
+  {text:{zh:"家里来了个陌生人类，你的战术是？",en:"A stranger shows up at your place. Your move?"},opts:[{text:{zh:"闻鞋→闻裤腿→闻包。标准三步背调",en:"Sniff the shoes, pants, bag. Standard three-step background check."},w:{E:2,T:1}},{text:{zh:"消失。钻进床底最深处监视两小时",en:"Vanish. Under the bed, furthest corner. Two-hour surveillance."},w:{I:2}},{text:{zh:"从高处观察。他不靠近我就当不存在",en:"Watch from up high. If they don't approach, they don't exist."},w:{I:1,F:1}},{text:{zh:"直接跳腿上呼噜。新人类都该被我宠幸",en:"Jump on their lap. Start purring. Lucky them."},w:{E:2}}]},
+  {text:{zh:"独自在家，你最爱怎么过？",en:"Home alone. Your ideal afternoon?"},opts:[{text:{zh:"追一块阳光走遍客厅，最后躺进去晒成一摊",en:"Chase a sunbeam across the living room. Melt into it."},w:{I:2,S:1}},{text:{zh:"跟空气搏斗半小时，顺便打翻两个杯子和一盆多肉",en:"Fight invisible enemies for 30 min. Casualties: two cups, one succulent."},w:{E:2}},{text:{zh:"爬上最高柜子俯视整个家，思考人类不懂的哲学",en:"Climb the tallest cabinet. Contemplate things humans will never understand."},w:{I:1,N:1}},{text:{zh:"巡视每个房间，顺便蹭铲屎官腿三次",en:"Patrol every room. Rub their legs three times for good measure."},w:{E:1}}]},
+  {text:{zh:"铲屎官买了个豪华五层猫爬架，你的反应？",en:"Your human drops big money on a fancy cat tree. Your reaction?"},opts:[{text:{zh:"看爬架三秒，果断钻进纸箱。纸箱永恒",en:"Glance at the tree. Dive into the box it came in. Cardboard is forever."},w:{N:2,P:1}},{text:{zh:"每层都测一遍——抓板、钻洞、最后打分",en:"Test every tier: scratch pads, squeeze through holes, full review."},w:{S:2,J:1}},{text:{zh:"直接占领最高层。从今天起那是我的王座",en:"Claim the top tier. That's my throne now."},w:{N:1,I:1}},{text:{zh:"每天九点准时磨爪五分钟，雷打不动",en:"9am sharp, five minutes on the same post. No exceptions."},w:{S:1,J:2}}]},
+  {text:{zh:"窗外有只鸟在叫，你在想什么？",en:"A bird's chirping outside. What's on your mind?"},opts:[{text:{zh:"它有多重？飞行速度？起跳初速度？（开始建模）",en:"How heavy is it? Flight speed? Launch velocity I'd need? (Running physics.)"},w:{S:2,T:1}},{text:{zh:"它自由飞翔……而我被关在这……（陷入哲思）",en:"It flies free… I'm stuck in here… (spiraling)"},w:{N:2,F:1}},{text:{zh:"它今天来得比平时晚，羽毛也少一根——要变天了",en:"Came later than usual today. Down a tail feather. Weather's about to turn."},w:{S:1,N:1}},{text:{zh:"要是我也有翅膀，就直接飞去有无限零食的地方",en:"If I had wings, I'd fly straight to the land of unlimited treats."},w:{N:2}}]},
+  {text:{zh:"铲屎官不小心踩了你的尾巴，你会：",en:"Your human accidentally steps on your tail. You:"},opts:[{text:{zh:"启动冷战。走开，三天不理，让他内疚到反省",en:"Cold war. Walk away. Three days of silence. Let the guilt sink in."},w:{F:2,J:1}},{text:{zh:"冷静评估：意外，非恶意。原谅，但记一笔",en:"Rational assessment: accident, not malice. Forgive. Note in the ledger."},w:{T:2}},{text:{zh:"默默在他拖鞋上留一道精准抓痕。互不相欠",en:"One precise scratch on their slipper. Now we're even."},w:{T:1,E:1}},{text:{zh:"发出最悲惨的喵叫，用含泪的眼睛等被哄",en:"Wounded meow. Watery eyes. Wait to be comforted."},w:{F:2}}]},
+  {text:{zh:"铲屎官心情不好，自己坐着发呆。你会？",en:"Your human's in a bad mood, sitting there alone. You:"},opts:[{text:{zh:"悄悄靠在他旁边。不说话，不要求，陪着",en:"Lean against them quietly. No words. Just there."},w:{F:2,I:1}},{text:{zh:"继续做自己的事。他的情绪是他的事",en:"Keep doing your thing. Their feelings are theirs to handle."},w:{T:2}},{text:{zh:"走过去踩他肚子。提醒他：还有一只猫要照顾",en:"Walk across their stomach. Don't forget — you have a cat here."},w:{F:1,E:1}},{text:{zh:"远程观察。分析会不会影响我的投喂频率",en:"Observe from afar. Analyze if this will affect feeding frequency."},w:{T:2,N:1}}]},
+  {text:{zh:"今天食物晚了整整五分钟，你会：",en:"Today's food is a full five minutes late. You:"},opts:[{text:{zh:"坐在厨房门口，纹丝不动，用眼神持续施压",en:"Sit in the kitchen doorway. Lock eyes. Sustained pressure via staring."},w:{F:1,J:1}},{text:{zh:"绕脚疯狂转圈，喵声越来越大——物理催促效率最高",en:"Circle their feet. Meow progressively louder. Subtlety is overrated."},w:{E:1,T:1}},{text:{zh:"表面忍着，心里已排好凌晨三点的报复时刻表",en:"Say nothing. Internally scheduling the 3am revenge wake-up."},w:{T:1,J:1}},{text:{zh:"摆出全世界最悲伤的表情，让他感受这五分钟的分量",en:"The saddest face in the universe. Make them feel the full weight of those five minutes."},w:{F:2,E:1}}]},
+  {text:{zh:"铲屎官趁你不注意挪了沙发，你发现后……",en:"Your human moved the couch when you weren't looking. You:"},opts:[{text:{zh:"这是对我秩序的侵犯。在原位坐三天以示抗议",en:"A direct attack on my sense of order. Sit on the original spot for three days in protest."},w:{J:2,F:1}},{text:{zh:"换就换，哪都能睡。猫生智慧就是随遇而安",en:"Whatever. I can sleep anywhere. That's cat wisdom."},w:{P:2}},{text:{zh:"立刻复查整个客厅，更新我的巡逻路线",en:"Full living-room audit. Update the patrol route."},w:{J:2,T:1}},{text:{zh:"哇新角度！可能看到新风景，立刻扑过去试",en:"Ooh — new angle! Could be new views. Dart over to check."},w:{P:1,N:1}}]},
+  {text:{zh:"地板上出现一只虫子，你会：",en:"A bug appears on the floor. You:"},opts:[{text:{zh:"围堵→断退路→精准一击。三步走，成功率 100%",en:"Surround → cut off escape → precision strike. 100% success rate."},w:{J:2,T:1}},{text:{zh:"拨一下、追、再拨——玩的过程比抓到它更有意思",en:"Bat it, let it run, chase, bat again. The chase is better than the catch."},w:{P:2}},{text:{zh:"追了十分钟正要下手，突然被光斑吸引。虫子？什么虫子？",en:"Chase for 10 min. About to strike. Sunbeam appears. Bug? What bug?"},w:{P:2,N:1}},{text:{zh:"先观察五分钟动线，选最省力的路线出手",en:"Study its movement for 5 min. Pick the best intercept route. Strike."},w:{J:1,N:1}}]},
+  {text:{zh:"铲屎官开了罐你没吃过的新口味，你的态度？",en:"Your human opens a flavor you've never had. You:"},opts:[{text:{zh:"闻三秒，舌尖试一小口，确认好吃再正式开动",en:"Three-second sniff. Tongue-tip taste. Only commit once approved."},w:{S:2,J:1}},{text:{zh:"新的！马上试！（吃完才发现不喜欢）",en:"NEW! Try immediately! (Realize I don't like it after finishing the bowl.)"},w:{E:1,P:1}},{text:{zh:"这不是我熟悉的味道。退出。等原来那款",en:"Not my usual. Exit. Wait for the one I know."},w:{S:2,J:1}},{text:{zh:"盯着闻很久……这个味道让我想起了一些事……最后没吃",en:"Sniff for a long time. This scent is stirring something up. Memories, maybe. And yet — no."},w:{N:2,I:1}}]},
+  {text:{zh:"铲屎官视频里出现了另一只猫，你立刻：",en:"Another cat appears on your human's video call. You immediately:"},opts:[{text:{zh:"走过去用身体挡住整个屏幕。镜头里只能有我",en:"Walk over. Block the screen with your body. One-cat-only policy."},w:{T:2,E:1}},{text:{zh:"心里酸了一下，表面高冷走开。绝不让他知道我在意",en:"Sharp pang inside. Walk off coolly. They will never know I cared."},w:{I:1,T:1}},{text:{zh:"凑过去拍屏幕：\"这位是谁？我们认识一下！\"",en:"Paw at the screen: \"Who's this?? Let's be friends!!\""},w:{E:2,F:1}},{text:{zh:"有点不舒服，悄悄去另一间屋自己消化",en:"Bit unsettling. Retreat to another room. Process alone."},w:{F:2,I:1}}]},
+  {text:{zh:"每天雷打不动的\"家宅巡视\"——你是哪种巡逻官？",en:"Time for your daily home patrol. What's your patrol style?"},opts:[{text:{zh:"每天九点整出发，按固定路线，确认无异常后回窝",en:"9am sharp. Same route every day. Confirm nothing's off. Return to base."},w:{J:2,S:1}},{text:{zh:"今天往左、明天往右、后天爬冰箱。探索无尽",en:"Left today. Right tomorrow. Scale the fridge next. Exploration never ends."},w:{P:1,N:1}},{text:{zh:"突然全速冲进某个房间，然后停下。不知道为啥来了",en:"Sprint into a random room at full speed. Stop. Why am I here?"},w:{P:2,N:1}},{text:{zh:"不用到处走。找个高处坐着，视野够就行",en:"Skip the walking. Find a high spot. You see more from up there anyway."},w:{I:1,N:1}}]},
+  {text:{zh:"又犯困了——说到\"睡觉\"这件头等大事，你是哪派？",en:"Getting sleepy. What kind of napper are you?"},opts:[{text:{zh:"每天同一个窝、同一个姿势。规律 = 高质量睡眠",en:"Same spot. Same position. Every day. Routine = quality sleep."},w:{J:2,S:1}},{text:{zh:"哪舒服睡哪：键盘、铲屎官的脸、洗碗池——都行",en:"Wherever works: keyboard, their face, the kitchen sink."},w:{P:2}},{text:{zh:"已经睡了十六小时……但再睡一会儿也没事",en:"Already slept 16 hours. But honestly, another hour won't hurt."},w:{P:1,I:1}},{text:{zh:"一天拆成深睡、浅睡监控、假寐三段——科学排班",en:"Split the day: deep sleep, light surveillance, fake sleep. Max efficiency."},w:{J:2,T:1}}]},
+  {text:{zh:"你理想中完美的一天长什么样？",en:"What does your perfect day look like?"},opts:[{text:{zh:"没有任何计划。走到哪算哪。完全自由",en:"No plans. No schedule. Whatever feels right, all day."},w:{P:2,N:1}},{text:{zh:"晒太阳→早饭→玩→午睡→晚饭→散步→睡。循环",en:"Sunbathe → breakfast → play → nap → dinner → stroll → sleep. Loop."},w:{J:2,S:1}},{text:{zh:"整天跟着铲屎官。他去哪我去哪。零距离",en:"Follow your human everywhere. Zero distance, all day."},w:{F:2,E:1}},{text:{zh:"发现一个从没开过的柜子，花一整天把它研究透",en:"Find a cabinet you've never opened. Spend the whole day inside."},w:{N:2,I:1}}]},
+];
+
+
+let LANG = 'zh';
+const TRAIT_GROUPS = ['sparks','skills','social'];
+
+function t(k){ return (I18N[LANG] && I18N[LANG][k]) || (I18N.zh[k] || k); }
+function tf(obj){
+  if(obj == null) return '';
+  if(typeof obj === 'string') return obj;
+  return (obj[LANG] !== undefined) ? obj[LANG] : (obj.zh !== undefined ? obj.zh : obj);
+}
+
+function setLang(lang){
+  if(lang !== 'zh' && lang !== 'en') return;
+  LANG = lang;
+  document.documentElement.setAttribute('lang', lang === 'zh' ? 'zh' : 'en');
+  document.title = t('pageTitle');
+  // toggle active button
+  document.querySelectorAll('.lang-toggle button').forEach(b=>{
+    b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+  });
+  updateStaticUI();
+  // refresh whatever screen is currently active
+  const cur_screen = document.querySelector('.screen.active');
+  if(!cur_screen) return;
+  const id = cur_screen.id;
+  if(id === 'landing') initLanding();
+  else if(id === 'quiz') renderQ();
+  else if(id === 'result') showResult();
+  else if(id === 'gallery') renderGallery();
+  else if(id === 'galleryDetail'){
+    // find current breed from gdMbti element text (fallback to INFJ)
+    const mbtiEl = document.getElementById('gdMbti');
+    const txt = mbtiEl ? mbtiEl.textContent : '';
+    const match = txt.match(/[IE][NS][TF][JP]/);
+    const key = match ? match[0] : 'INFJ';
+    showBreed(key);
+  }
+}
+
+function updateStaticUI(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.getAttribute('data-i18n');
+    const v = t(key);
+    if(v) el.textContent = v;
+  });
+}
+
+/* ═══════════════════════════════════════════
+   INIT
+   ═══════════════════════════════════════════ */
+
+function initLanding(){
+  document.getElementById('breedGrid').innerHTML =
+    Object.keys(C).map(k=>`<span onclick="showBreed('${k}')">${tf(C[k].breed)}</span>`).join('');
+  if(!document.getElementById('landCat').innerHTML){
+    document.getElementById('landCat').innerHTML = catFull(C.INFJ.svg, 160, 'INFJ');
+  }
+}
+
+updateStaticUI();
+initLanding();
+
+let cur=0, sel=null, scores={E:0,I:0,N:0,S:0,T:0,F:0,J:0,P:0};
+let shuffled = {};
+let history  = [];
+let galleryFrom = 'landing';
+let detailFrom  = 'gallery';
+const QF = Object.keys(C);
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+/* ─ QUIZ FLOW ─────────────────────────────── */
+
+function startQuiz(){
+  cur=0; sel=null; scores={E:0,I:0,N:0,S:0,T:0,F:0,J:0,P:0};
+  shuffled={}; history=[];
+  showScreen('quiz');
+  renderQ();
+}
+
+function renderQ(){
+  const q = QS[cur];
+  document.getElementById('qmeta').textContent = t('qMetaPrefix') + (cur+1) + t('qMetaMid') + QS.length;
+  document.getElementById('prog').style.width = `${(cur/QS.length)*100}%`;
+  document.getElementById('qtext').textContent = tf(q.text);
+  // paw trail — cycle through 4 variants per question
+  const variant = (cur % 4) + 1;
+  const pawsEl = document.getElementById('qPaws');
+  pawsEl.className = 'q-paws q-paws-v' + variant;
+  if(variant === 2){
+    pawsEl.innerHTML =
+      '<span class="q-paw">🐾</span>' +
+      '<span class="q-spark">✨</span>' +
+      '<span class="q-paw">🐾</span>' +
+      '<span class="q-spark">✨</span>' +
+      '<span class="q-paw">🐾</span>';
+  } else {
+    pawsEl.innerHTML =
+      '<span class="q-paw">🐾</span>'.repeat(5);
+  }
+  sel = null;
+  document.getElementById('nxt').classList.remove('on');
+  const el = document.getElementById('opts');
+  el.innerHTML = '';
+  if(!shuffled[cur]) shuffled[cur] = [...q.opts].sort(()=>Math.random()-.5);
+  const opts = shuffled[cur];
+  const savedW = history[cur];
+  const savedKey = savedW ? JSON.stringify(savedW) : null;
+  opts.forEach(o=>{
+    const b = document.createElement('button');
+    b.className = 'opt';
+    b.textContent = tf(o.text);
+    b.onclick = ()=>{
+      document.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));
+      b.classList.add('sel');
+      sel = o.w;
+      document.getElementById('nxt').classList.add('on');
+    };
+    if(savedKey && JSON.stringify(o.w) === savedKey){
+      b.classList.add('sel');
+      sel = o.w;
+      document.getElementById('nxt').classList.add('on');
+    }
+    el.appendChild(b);
+  });
+  document.getElementById('prv').style.visibility = cur > 0 ? 'visible' : 'hidden';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function nextQ(){
+  if(!sel) return;
+  if(history[cur]){
+    for(const[k,v] of Object.entries(history[cur])) scores[k]=(scores[k]||0)-v;
+  }
+  history[cur] = sel;
+  for(const[k,v] of Object.entries(sel)) scores[k]=(scores[k]||0)+v;
+  cur++;
+  cur>=QS.length ? showResult() : renderQ();
+}
+
+function prevQ(){
+  if(cur === 0) return;
+  cur--;
+  renderQ();
+}
+
+function getMBTI(){
+  return(scores.E>=scores.I?'E':'I')+(scores.N>=scores.S?'N':'S')+(scores.T>=scores.F?'T':'F')+(scores.J>=scores.P?'J':'P');
+}
+
+/* ─ RESULT ────────────────────────────────── */
+
+function showResult(){
+  const mbti=getMBTI(), r=C[mbti];
+  showScreen('result');
+  renderCatDetail(r, mbti, {
+    cat:'resCat', breed:'rBreed', motto:'rMotto', mbti:'rMbti',
+    desc:'rDesc', tags:'rTags', alt:'rAlt', compat:'rCompat'
+  }, true);
+  const E=scores.E||0,I=scores.I||0,N=scores.N||0,S=scores.S||0,T=scores.T||0,F=scores.F||0,J=scores.J||0,P=scores.P||0;
+  const dc = r.dimColor||'var(--rose)';
+  document.getElementById('rDims').innerHTML=[
+    {l:'E',r:'I',p:Math.round(E/(E+I||1)*100)},
+    {l:'N',r:'S',p:Math.round(N/(N+S||1)*100)},
+    {l:'T',r:'F',p:Math.round(T/(T+F||1)*100)},
+    {l:'J',r:'P',p:Math.round(J/(J+P||1)*100)}
+  ].map(d=>`<div class="dim-row"><span class="dim-l">${d.l}</span><div class="dim-bg"><div class="dim-fg" style="width:${d.p}%;background:${dc}"></div></div><span class="dim-r">${d.r}</span><span class="dim-p">${d.p}%</span></div>`).join('');
+}
+
+function escHTML(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function renderCatDetail(r, mbti, ids, isResult){
+  document.getElementById(ids.cat).innerHTML = catFull(r.svg, 150, mbti);
+  document.getElementById(ids.breed).textContent = tf(r.breed);
+  document.getElementById(ids.motto).textContent = '“' + tf(r.motto) + '”';
+  document.getElementById(ids.mbti).textContent = (isResult ? t('mbtiLabel') : '') + mbti;
+  // description: two paragraphs
+  const paras = tf(r.desc);
+  const html_paras = (Array.isArray(paras) ? paras : [paras])
+    .map(p => `<p>${escHTML(p)}</p>`).join('');
+  document.getElementById(ids.desc).innerHTML = html_paras;
+  // tags (three groups)
+  document.getElementById(ids.tags).innerHTML = TRAIT_GROUPS.map(g=>{
+    const items = tf(r.traits[g]) || [];
+    return `<div class="tag-group">
+      <span class="tag-group-label">${escHTML(t('trait_'+g))}</span>
+      <div class="tag-group-items">${items.map(x=>`<span class="tag-item">${escHTML(x)}</span>`).join('')}</div>
+    </div>`;
+  }).join('');
+  // alt
+  const altKey = r.alt, a = C[altKey];
+  if(a){
+    const altLabel = isResult ? t('altLabelResult') : t('altLabelGallery');
+    document.getElementById(ids.alt).innerHTML =
+      `<div class="alt-card" onclick="showBreed('${altKey}')">
+        <div class="alt-face">${catFace(a.svg, 52, altKey)}</div>
+        <div class="alt-info">
+          <p class="alt-label">${escHTML(altLabel)}</p>
+          <p class="alt-name">${escHTML(tf(a.breed))}</p>
+          <p class="alt-motto">“${escHTML(tf(a.motto))}”</p>
+        </div>
+        <span class="alt-arrow">→</span>
+      </div>`;
+  } else {
+    document.getElementById(ids.alt).innerHTML = '';
+  }
+  // compat
+  const bestKey = r.compat.best, riskKey = r.compat.risk;
+  const bestCat = C[bestKey], riskCat = C[riskKey];
+  document.getElementById(ids.compat).innerHTML =
+    `<div class="compat-card" onclick="showBreed('${bestKey}')">
+      <p class="compat-label">${escHTML(t('compatBest'))}</p>
+      <p class="compat-name">${escHTML(tf(bestCat.breed))}</p>
+      <p class="compat-type">${bestKey}</p>
+    </div>
+    <div class="compat-card" onclick="showBreed('${riskKey}')">
+      <p class="compat-label">${escHTML(t('compatRisk'))}</p>
+      <p class="compat-name">${escHTML(tf(riskCat.breed))}</p>
+      <p class="compat-type">${riskKey}</p>
+    </div>`;
+}
+
+function shareResult(){
+  const mbti=getMBTI(), r=C[mbti];
+  const breed = tf(r.breed);
+  const motto = tf(r.motto);
+  const txt = LANG === 'zh'
+    ? `🐱 我做了CatTI猫猫性格测试！\n我是 ${breed}：“${motto}”\n你是哪种猫猫？快来测测！`
+    : `🐱 I took the CatTI cat personality test!\nI'm a ${breed}: "${motto}"\nWhich cat are you? Come find out!`;
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(txt).then(()=>showToast(t('shareToast')));
+  } else showToast(breed);
+}
+
+function showToast(msg){
+  const t_el = document.getElementById('toast');
+  t_el.textContent = msg;
+  t_el.classList.add('show');
+  setTimeout(()=>t_el.classList.remove('show'), 3000);
+}
+
+function reset(){
+  cur=0; sel=null; scores={E:0,I:0,N:0,S:0,T:0,F:0,J:0,P:0};
+  shuffled={}; history=[];
+  showScreen('landing');
+  initLanding();
+}
+
+function backToLanding(){
+  // abandon the current quiz and return to the main page, starting fresh
+  reset();
+}
+
+/* ─ GALLERY ──────────────────────────────── */
+
+function openGallery(){
+  const c = document.querySelector('.screen.active');
+  galleryFrom = c ? c.id : 'landing';
+  renderGallery();
+  showScreen('gallery');
+}
+
+function renderGallery(){
+  const g = document.getElementById('galGrid');
+  g.innerHTML = Object.entries(C).map(([k,v])=>
+    `<div class="gal-card" onclick="showBreed('${k}')">
+      <div class="gal-face">${catFace(v.svg, 64, k)}</div>
+      <p class="gal-name">${tf(v.breed)}</p>
+      <p class="gal-mbti">${k}</p>
+    </div>`
+  ).join('');
+}
+
+function showBreed(key){
+  const r = C[key];
+  if(!r) return;
+  const curScreen = document.querySelector('.screen.active');
+  if(curScreen && curScreen.id !== 'galleryDetail'){
+    detailFrom = curScreen.id;
+  }
+  renderCatDetail(r, key, {
+    cat:'gdCat', breed:'gdBreed', motto:'gdMotto', mbti:'gdMbti',
+    desc:'gdDesc', tags:'gdTags', alt:'gdAlt', compat:'gdCompat'
+  }, false);
+  showScreen('galleryDetail');
+}
+
+function backToGallery(){
+  if(detailFrom === 'gallery'){
+    renderGallery();
+    showScreen('gallery');
+  } else {
+    showScreen(detailFrom);
+  }
+}
+
+function backFromGallery(){
+  showScreen(galleryFrom || 'landing');
+}
+
+function startQuizFromGallery(){
+  startQuiz();
+}
+
+
+/* ─ CANVAS SHARE IMAGE ──────────────────────── */
+
+function wrapCanvasText(ctx, text, maxWidth){
+  // Handles both CJK (break per-character) and Latin (break per-word).
+  const isCJK = /[\u4e00-\u9fa5]/.test(text);
+  const lines = [];
+  if(isCJK){
+    let line = '';
+    for(const ch of text){
+      const test = line + ch;
+      if(ctx.measureText(test).width > maxWidth && line){
+        lines.push(line);
+        line = ch;
+      } else {
+        line = test;
+      }
+    }
+    if(line) lines.push(line);
+  } else {
+    const words = text.split(' ');
+    let line = '';
+    for(const w of words){
+      const test = line ? line + ' ' + w : w;
+      if(ctx.measureText(test).width > maxWidth && line){
+        lines.push(line);
+        line = w;
+      } else {
+        line = test;
+      }
+    }
+    if(line) lines.push(line);
+  }
+  return lines;
+}
+
+async function generateShareImage(){
+  if(document.fonts && document.fonts.ready){
+    try { await document.fonts.ready; } catch(e) {}
+  }
+
+  const mbti = getMBTI();
+  const r = C[mbti];
+  const breed = tf(r.breed);
+  const motto = tf(r.motto);
+  const descParas = tf(r.desc) || [];
+  const altKey = r.alt;
+  const altCat = C[altKey];
+  const bestKey = r.compat.best;
+  const riskKey = r.compat.risk;
+  const bestCat = C[bestKey];
+  const riskCat = C[riskKey];
+  const E=scores.E||0,I=scores.I||0,N=scores.N||0,S=scores.S||0,T=scores.T||0,F=scores.F||0,J=scores.J||0,P=scores.P||0;
+  const dims = [
+    {l:'E',r:'I',p:Math.round(E/(E+I||1)*100)},
+    {l:'N',r:'S',p:Math.round(N/(N+S||1)*100)},
+    {l:'T',r:'F',p:Math.round(T/(T+F||1)*100)},
+    {l:'J',r:'P',p:Math.round(J/(J+P||1)*100)},
+  ];
+
+  const W = 1080;
+  const margin = 80;
+  const innerW = W - margin*2;
+
+  // Helpers ------------------------------------------------
+  function wrapText(ctx, text, maxW){
+    const isCJK = /[\u4e00-\u9fa5]/.test(text);
+    const lines = [];
+    if(isCJK){
+      let line = '';
+      for(const ch of text){
+        const test = line + ch;
+        if(ctx.measureText(test).width > maxW && line){
+          lines.push(line); line = ch;
+        } else { line = test; }
+      }
+      if(line) lines.push(line);
+    } else {
+      const words = text.split(' ');
+      let line = '';
+      for(const w of words){
+        const test = line ? line + ' ' + w : w;
+        if(ctx.measureText(test).width > maxW && line){
+          lines.push(line); line = w;
+        } else { line = test; }
+      }
+      if(line) lines.push(line);
+    }
+    return lines;
+  }
+
+  // First: measure total height so we can size the canvas.
+  const measureCvs = document.createElement('canvas');
+  const mctx = measureCvs.getContext('2d');
+
+  // layout constants
+  const layout = {
+    headerH: 200,
+    catSize: 460,
+    catBlockH: 560,     // cat portrait + padding
+    nameH: 170,         // breed name + MBTI pill
+    mottoFont: 40,
+    mottoLineH: 58,
+    sectionTitleFont: 32,
+    sectionTitleGap: 50,
+    descFont: 30,
+    descLineH: 46,
+    paraGap: 22,
+    tagLabelFont: 24,
+    tagItemFont: 26,
+    tagRowH: 88,
+    altH: 220,
+    dimFont: 28,
+    dimRowH: 78,
+    compatH: 220,
+    footerH: 110,
+    sectionGap: 60,
+  };
+
+  // Measure motto
+  mctx.font = 'italic ' + layout.mottoFont + 'px "Noto Serif SC", serif';
+  const mottoLines = wrapText(mctx, '"' + motto + '"', innerW - 40);
+  const mottoH = mottoLines.length * layout.mottoLineH + 30;
+
+  // Measure description
+  mctx.font = '400 ' + layout.descFont + 'px "Noto Sans SC", sans-serif';
+  const descLinesPerPara = descParas.map(p => wrapText(mctx, p, innerW));
+  const descContentH = descLinesPerPara.reduce(
+    (sum, lines) => sum + lines.length * layout.descLineH + layout.paraGap, 0
+  );
+  const descSectionH = layout.sectionTitleGap + descContentH + layout.sectionGap;
+
+  const tagsSectionH = layout.sectionTitleGap + 3 * layout.tagRowH + layout.sectionGap;
+  const altSectionH = layout.sectionTitleGap + layout.altH + layout.sectionGap;
+  const dimsSectionH = layout.sectionTitleGap + 4 * layout.dimRowH + layout.sectionGap;
+  const compatSectionH = layout.sectionTitleGap + layout.compatH + layout.sectionGap;
+
+  const totalH = layout.headerH + layout.catBlockH + layout.nameH + mottoH
+    + descSectionH + tagsSectionH + altSectionH + dimsSectionH
+    + compatSectionH + layout.footerH;
+  const H = Math.ceil(totalH);
+
+  // Now the real canvas
+  const cvs = document.createElement('canvas');
+  cvs.width = W; cvs.height = H;
+  const ctx = cvs.getContext('2d');
+  ctx.textAlign = 'center';
+
+  // Background gradient
+  const bg = ctx.createLinearGradient(0, 0, 0, H);
+  bg.addColorStop(0,'#FFF5EC'); bg.addColorStop(0.5,'#FBEADB'); bg.addColorStop(1,'#F4E6D4');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // Scatter soft accent circles for texture
+  ctx.save();
+  const accentColors = ['#E87C6A','#F4A884','#C4A8D8','#9ECFAE','#8CC4D8','#E8C064'];
+  for(let i=0;i<18;i++){
+    ctx.globalAlpha = 0.05 + Math.random()*0.04;
+    ctx.fillStyle = accentColors[i % accentColors.length];
+    ctx.beginPath();
+    ctx.arc(Math.random()*W, Math.random()*H, 45 + Math.random()*100, 0, Math.PI*2);
+    ctx.fill();
+  }
+  ctx.restore();
+
+  let y = 0;
+
+  // ── HEADER ──
+  y += 128;
+  ctx.fillStyle = '#E87C6A';
+  ctx.font = '700 56px "Noto Serif SC", serif';
+  ctx.fillText('CatTI', W/2, y);
+  y += 44;
+  ctx.fillStyle = '#9A8878';
+  ctx.font = '400 28px "Noto Sans SC", sans-serif';
+  ctx.fillText(t('imgTagline'), W/2, y);
+  y = layout.headerH;
+
+  // ── CAT PORTRAIT ──
+  const cx = W/2;
+  const catRadius = layout.catSize / 2;
+  const catCy = y + 40 + catRadius;
+  // soft white backplate
+  ctx.save();
+  ctx.shadowColor = 'rgba(120,70,30,.18)';
+  ctx.shadowBlur = 40; ctx.shadowOffsetY = 10;
+  ctx.fillStyle = '#FFFEFB';
+  ctx.beginPath();
+  ctx.arc(cx, catCy, catRadius + 14, 0, Math.PI*2);
+  ctx.fill();
+  ctx.restore();
+  const catSrc = (typeof CAT_IMAGES !== 'undefined' && CAT_IMAGES[mbti]) ? CAT_IMAGES[mbti] : ('images/' + mbti + '.png');
+  await new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(cx, catCy, catRadius, 0, Math.PI*2);
+      ctx.closePath(); ctx.clip();
+      ctx.drawImage(img, cx - catRadius, catCy - catRadius, catRadius*2, catRadius*2);
+      ctx.restore();
+      resolve();
+    };
+    img.onerror = () => {
+      ctx.save(); ctx.fillStyle = '#F4E6D4';
+      ctx.beginPath(); ctx.arc(cx, catCy, catRadius, 0, Math.PI*2); ctx.fill();
+      ctx.restore();
+      resolve();
+    };
+    img.src = catSrc;
+  });
+  y += layout.catBlockH;
+
+  // ── BREED NAME + MBTI PILL ──
+  ctx.fillStyle = '#2D2118';
+  ctx.font = '700 80px "Noto Serif SC", serif';
+  ctx.fillText(breed, W/2, y + 60);
+
+  // MBTI pill
+  const pillW = 200, pillH = 64, pillR = pillH/2;
+  const pillY = y + 90;
+  ctx.fillStyle = '#F4E6D4';
+  ctx.beginPath();
+  ctx.moveTo(W/2 - pillW/2 + pillR, pillY);
+  ctx.lineTo(W/2 + pillW/2 - pillR, pillY);
+  ctx.arc(W/2 + pillW/2 - pillR, pillY + pillR, pillR, -Math.PI/2, Math.PI/2);
+  ctx.lineTo(W/2 - pillW/2 + pillR, pillY + pillH);
+  ctx.arc(W/2 - pillW/2 + pillR, pillY + pillR, pillR, Math.PI/2, 3*Math.PI/2);
+  ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#8A6E52';
+  ctx.font = '600 32px "Noto Sans SC", sans-serif';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(mbti, W/2, pillY + pillR + 2);
+  ctx.textBaseline = 'alphabetic';
+  y += layout.nameH;
+
+  // ── MOTTO ──
+  ctx.fillStyle = '#4A3C30';
+  ctx.font = 'italic ' + layout.mottoFont + 'px "Noto Serif SC", serif';
+  mottoLines.forEach((line, i) => {
+    ctx.fillText(line, W/2, y + (i+1)*layout.mottoLineH);
+  });
+  y += mottoH;
+
+  // Section title helper
+  function drawSectionTitle(text, yPos){
+    ctx.fillStyle = '#8A6E52';
+    ctx.font = '600 ' + layout.sectionTitleFont + 'px "Noto Serif SC", serif';
+    ctx.fillText(text, W/2, yPos);
+    // small divider under title
+    ctx.fillStyle = '#E0CEB8';
+    const dW = 60;
+    ctx.fillRect(W/2 - dW/2, yPos + 14, dW, 2);
+  }
+
+  // ── DESCRIPTION (3 paragraphs) ──
+  drawSectionTitle(t('secDesc'), y + 30);
+  let dy = y + layout.sectionTitleGap + 30;
+  ctx.fillStyle = '#3D3025';
+  ctx.font = '400 ' + layout.descFont + 'px "Noto Sans SC", sans-serif';
+  ctx.textAlign = 'left';
+  descLinesPerPara.forEach((lines, pi) => {
+    lines.forEach((line, li) => {
+      ctx.fillText(line, margin, dy + (li+1)*layout.descLineH);
+    });
+    dy += lines.length * layout.descLineH + layout.paraGap;
+  });
+  ctx.textAlign = 'center';
+  y += descSectionH;
+
+  // ── TAGS (3 groups) ──
+  drawSectionTitle(t('secTags'), y + 30);
+  let ty = y + layout.sectionTitleGap + 30;
+  const groups = ['sparks', 'skills', 'social'];
+  groups.forEach((g) => {
+    const items = tf(r.traits[g]) || [];
+    ctx.fillStyle = '#9A8878';
+    ctx.font = '500 ' + layout.tagLabelFont + 'px "Noto Sans SC", sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(t('trait_' + g), margin, ty + 20);
+    // Draw items as pills on the next line
+    ctx.font = '500 ' + layout.tagItemFont + 'px "Noto Sans SC", sans-serif';
+    let px = margin;
+    const pillRowY = ty + 40;
+    items.forEach((item) => {
+      const tw = ctx.measureText(item).width;
+      const pw = tw + 30, ph = 38;
+      ctx.fillStyle = '#F4E6D4';
+      ctx.beginPath();
+      const rr = ph/2;
+      ctx.moveTo(px + rr, pillRowY);
+      ctx.lineTo(px + pw - rr, pillRowY);
+      ctx.arc(px + pw - rr, pillRowY + rr, rr, -Math.PI/2, Math.PI/2);
+      ctx.lineTo(px + rr, pillRowY + ph);
+      ctx.arc(px + rr, pillRowY + rr, rr, Math.PI/2, 3*Math.PI/2);
+      ctx.closePath(); ctx.fill();
+      ctx.fillStyle = '#8A6E52';
+      ctx.fillText(item, px + 15, pillRowY + 26);
+      px += pw + 10;
+    });
+    ctx.textAlign = 'center';
+    ty += layout.tagRowH;
+  });
+  y += tagsSectionH;
+
+  // ── ALT PERSONA ──
+  drawSectionTitle(t('secAltResult'), y + 30);
+  const ay = y + layout.sectionTitleGap + 30;
+  // backdrop card
+  ctx.fillStyle = '#FFFEFB';
+  ctx.strokeStyle = '#F0E4D2'; ctx.lineWidth = 2;
+  const cardX = margin, cardY = ay, cardW = innerW, cardH = 150;
+  ctx.beginPath();
+  const cr = 20;
+  ctx.moveTo(cardX + cr, cardY);
+  ctx.lineTo(cardX + cardW - cr, cardY);
+  ctx.arc(cardX + cardW - cr, cardY + cr, cr, -Math.PI/2, 0);
+  ctx.lineTo(cardX + cardW, cardY + cardH - cr);
+  ctx.arc(cardX + cardW - cr, cardY + cardH - cr, cr, 0, Math.PI/2);
+  ctx.lineTo(cardX + cr, cardY + cardH);
+  ctx.arc(cardX + cr, cardY + cardH - cr, cr, Math.PI/2, Math.PI);
+  ctx.lineTo(cardX, cardY + cr);
+  ctx.arc(cardX + cr, cardY + cr, cr, Math.PI, 3*Math.PI/2);
+  ctx.closePath();
+  ctx.fill(); ctx.stroke();
+  // alt cat face + text
+  if(altCat){
+    const altCatSrc = (typeof CAT_IMAGES !== 'undefined' && CAT_IMAGES[altKey]) ? CAT_IMAGES[altKey] : ('images/' + altKey + '.png');
+    await new Promise((resolve) => {
+      const img2 = new Image();
+      img2.onload = () => {
+        const rr = 45;
+        const icx = cardX + 30 + rr, icy = cardY + cardH/2;
+        ctx.save();
+        ctx.beginPath(); ctx.arc(icx, icy, rr, 0, Math.PI*2); ctx.clip();
+        ctx.drawImage(img2, icx - rr, icy - rr, rr*2, rr*2);
+        ctx.restore();
+        resolve();
+      };
+      img2.onerror = resolve;
+      img2.src = altCatSrc;
+    });
+    ctx.textAlign = 'left';
+    ctx.fillStyle = '#9A8878';
+    ctx.font = '400 22px "Noto Sans SC", sans-serif';
+    ctx.fillText(t('altLabelResult'), cardX + 145, cardY + 48);
+    ctx.fillStyle = '#2D2118';
+    ctx.font = '700 34px "Noto Serif SC", serif';
+    ctx.fillText(tf(altCat.breed) + '  ·  ' + altKey, cardX + 145, cardY + 86);
+    ctx.fillStyle = '#4A3C30';
+    ctx.font = 'italic 24px "Noto Serif SC", serif';
+    const altMottoLines = wrapText(ctx, '"' + tf(altCat.motto) + '"', cardW - 170);
+    ctx.fillText(altMottoLines[0], cardX + 145, cardY + 120);
+    ctx.textAlign = 'center';
+  }
+  y += altSectionH;
+
+  // ── FOUR DIMENSIONS ──
+  drawSectionTitle(t('secDims'), y + 30);
+  let dimY = y + layout.sectionTitleGap + 30;
+  const dimBarW = innerW - 200;
+  const dimBarX = margin + 60;
+  dims.forEach((d) => {
+    ctx.fillStyle = '#9A8878';
+    ctx.font = '600 28px "Noto Sans SC", sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(d.l, margin + 20, dimY + 30);
+    ctx.textAlign = 'right';
+    ctx.fillText(d.r, W - margin - 20, dimY + 30);
+    // bar background
+    ctx.fillStyle = '#F0E4D2';
+    ctx.fillRect(dimBarX, dimY + 18, dimBarW, 18);
+    // bar fill
+    ctx.fillStyle = '#E87C6A';
+    const fw = dimBarW * d.p / 100;
+    ctx.fillRect(dimBarX, dimY + 18, fw, 18);
+    // percentage
+    ctx.fillStyle = '#8A6E52';
+    ctx.font = '500 22px "Noto Sans SC", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(d.p + '%', W/2, dimY + 62);
+    dimY += layout.dimRowH;
+  });
+  ctx.textAlign = 'center';
+  y += dimsSectionH;
+
+  // ── COMPATIBILITY (best + risk) ──
+  drawSectionTitle(t('secCompat'), y + 30);
+  const cy0 = y + layout.sectionTitleGap + 30;
+  const ccW = (innerW - 30) / 2;
+  const ccH = 160;
+  [[bestKey, bestCat, t('compatBest'), '#9ECFAE', margin],
+   [riskKey, riskCat, t('compatRisk'), '#F4A884', margin + ccW + 30]].forEach(([key, cat, label, accent, xpos]) => {
+    if(!cat) return;
+    // card background
+    ctx.fillStyle = '#FFFEFB';
+    ctx.strokeStyle = '#F0E4D2';
+    const rr = 18;
+    ctx.beginPath();
+    ctx.moveTo(xpos + rr, cy0);
+    ctx.lineTo(xpos + ccW - rr, cy0);
+    ctx.arc(xpos + ccW - rr, cy0 + rr, rr, -Math.PI/2, 0);
+    ctx.lineTo(xpos + ccW, cy0 + ccH - rr);
+    ctx.arc(xpos + ccW - rr, cy0 + ccH - rr, rr, 0, Math.PI/2);
+    ctx.lineTo(xpos + rr, cy0 + ccH);
+    ctx.arc(xpos + rr, cy0 + ccH - rr, rr, Math.PI/2, Math.PI);
+    ctx.lineTo(xpos, cy0 + rr);
+    ctx.arc(xpos + rr, cy0 + rr, rr, Math.PI, 3*Math.PI/2);
+    ctx.closePath();
+    ctx.fill(); ctx.stroke();
+    // accent dot
+    ctx.fillStyle = accent;
+    ctx.beginPath();
+    ctx.arc(xpos + ccW/2, cy0 + 32, 6, 0, Math.PI*2);
+    ctx.fill();
+    ctx.fillStyle = '#9A8878';
+    ctx.font = '500 22px "Noto Sans SC", sans-serif';
+    ctx.fillText(label, xpos + ccW/2, cy0 + 68);
+    ctx.fillStyle = '#2D2118';
+    ctx.font = '700 32px "Noto Serif SC", serif';
+    ctx.fillText(tf(cat.breed), xpos + ccW/2, cy0 + 108);
+    ctx.fillStyle = '#BAA894';
+    ctx.font = '500 22px "Noto Sans SC", sans-serif';
+    ctx.fillText(key, xpos + ccW/2, cy0 + 138);
+  });
+  y += compatSectionH;
+
+  // ── FOOTER ──
+  ctx.fillStyle = '#BAA894';
+  ctx.font = '400 26px "Noto Sans SC", sans-serif';
+  ctx.fillText(t('imgFooter'), W/2, H - 50);
+
+  return cvs;
+}
+
+
+
+async function shareAsImage(){
+  showToast(t('savingImg'));
+  try {
+    const cvs = await generateShareImage();
+    cvs.toBlob(async (blob) => {
+      if(!blob){
+        showToast('生成失败 / Failed');
+        return;
+      }
+      const filename = 'catti-' + getMBTI() + '.png';
+      const file = new File([blob], filename, {type: 'image/png'});
+
+      // Try native share (iOS Safari, Android Chrome)
+      try {
+        if(navigator.canShare && navigator.canShare({files: [file]})){
+          await navigator.share({
+            files: [file],
+            title: 'CatTI',
+            text: t('imgShareTitle'),
+          });
+          return;
+        }
+      } catch(e){
+        if(e && e.name === 'AbortError') return; // user dismissed
+        // else fall through to download
+      }
+
+      // Fallback: trigger a download
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast(t('savedImg'));
+    }, 'image/png');
+  } catch(err){
+    console.error('[shareAsImage]', err);
+    showToast('生成失败 / Failed');
+  }
+}
+
+</script>
+</body>
+</html>
